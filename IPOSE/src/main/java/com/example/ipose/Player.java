@@ -9,7 +9,6 @@ public class Player extends Component  {
 
     public void move(int direction) { // 1 of -1
         entity.translateX(MOVE_SPEED * direction);
-
     }
 
 }
