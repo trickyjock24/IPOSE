@@ -50,7 +50,7 @@ public class Main extends GameApplication {
     protected void initGame() {
         player = FXGL.entityBuilder()
                 .at(300, 300)
-                .view(new Rectangle(25, 25, Color.BLUE))
+                .view("vincent-spijkers-pixilart.png")
                 .with(new Player())
                 .buildAndAttach();
     }
