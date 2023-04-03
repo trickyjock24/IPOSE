@@ -7,12 +7,14 @@ import com.almasb.fxgl.entity.Entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Main extends GameApplication {
+    private Entity player;
+
+
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(600);
@@ -23,51 +25,39 @@ public class Main extends GameApplication {
 
     @Override
     protected void initInput() {
+        // Input is helaas nog hier
+
         onKey(KeyCode.D, () -> {
-            player.translateX(5); // move right 5 pixels
-            inc("pixelsMoved", +5);
+            player.getComponent(Player.class).move(1); // move right
         });
 
         onKey(KeyCode.A, () -> {
-            player.translateX(-5); // move left 5 pixels
-            inc("pixelsMoved", -5);
+            player.getComponent(Player.class).move(-1); // move left
         });
 
         onKey(KeyCode.W, () -> {
-            player.translateY(-5); // move up 5 pixels
-            inc("pixelsMoved", +5);
+            // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
+            // Als afstand kleiner is dan x ga de ladder op
         });
 
         onKey(KeyCode.S, () -> {
-            player.translateY(5); // move down 5 pixels
-            inc("pixelsMoved", +5);
+            // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
+            // Als afstand kleiner is dan x ga de ladder op
         });
     }
 
     @Override
-    protected void initGameVars(Map<String, Object> vars) {
-        vars.put("pixelsMoved", 0);
-    }
-
-    private Entity player;
-
-    @Override
     protected void initGame() {
-        player = entityBuilder()
+        player = FXGL.entityBuilder()
                 .at(300, 300)
                 .view(new Rectangle(25, 25, Color.BLUE))
+                .with(new Player())
                 .buildAndAttach();
     }
 
     @Override
     protected void initUI() {
-        Text textPixels = new Text();
-        textPixels.setTranslateX(50); // x = 50
-        textPixels.setTranslateY(100); // y = 100
-
-        textPixels.textProperty().bind(getWorldProperties().intProperty("pixelsMoved").asString());
-
-        getGameScene().addUINode(textPixels); // add to the scene graph
+        // nothing to do here
     }
 
     public static void main(String[] args) {
