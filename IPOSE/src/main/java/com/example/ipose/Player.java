@@ -17,12 +17,12 @@ public class Player extends Component  {
         entity.translateX(MOVE_SPEED * direction);
     }
 
+
     public void climb(int direction, ArrayList<Entity> ladders) { // 1 = up, 2 = down
-
         // Bereken de afstand naar de ladder toe:
-        ArrayList<HashMap<Double, Double>> distances = new ArrayList<>();
+        ArrayList<HashMap<Double, Double>> distances = new ArrayList<>(); // Een HashMap is net als een dictionary :)
 
-        for (Entity i : ladders) {
+        for (Entity i : ladders) { // We gaan door alle ladders heen
             double distanceX = Math.abs(i.getX() - entity.getX());
 
             double distanceY = 69;
@@ -30,22 +30,35 @@ public class Player extends Component  {
                 distanceY = (i.getBottomY() * - 1) - (-1 * entity.getBottomY());
             }
             else {
-                distanceY = entity.getBottomY() - i.getBottomY();
+                // DE CODE IN DEZE ELSE STATEMENT IS BROKEN
+                // DIT IS DE REDEN DAT DE LADDER OMLAAG ZO KUT DOET
+                distanceY = i.getY() - i.getHeight() - entity.getY(); // i.getHeight() is 0 dus tis broken :). De Height is ongeveer 120 bij een grootte van 2x2
+
+                System.out.println("DISTANCE IS: " + distanceY);
+                System.out.println("LADDER HEIGHT IS: " + i.getHeight());
+                System.out.println("ENTITY BOTTOM Y: " + entity.getBottomY());
+                System.out.println("LADDER BOTTOM Y: " + i.getBottomY());
+                System.out.println("ENTITY Y: " + entity.getY());
+                System.out.println("LADDER Y: " + i.getY());
             }
-            System.out.println(distanceY);
 
             HashMap<Double, Double> lol = new HashMap<>();
             lol.put(distanceX, distanceY);
             distances.add(lol);
         }
 
-        // Pakt de dictionary van de korste x-afstand
+        // Pakt de HashMap met de kleinste x-afstand
+        // Als je dit niet helemaal begrijpt vraag het aan chatgpt want kan best confusing zijn
         HashMap<Double, Double> smallestHashMap = distances.stream()
-                .min(Comparator.comparingDouble(map -> map.keySet().stream().findFirst().orElse(Double.MAX_VALUE)))
+                .min(Comparator.comparingDouble(map -> map.keySet()
+                        .stream()
+                        .findFirst()
+                        .orElse(Double.MAX_VALUE)))
                 .orElse(null);
 
         if (smallestHashMap != null) {
-            double smallestX = smallestHashMap. // De kortste x-afstand
+
+            double smallestX = smallestHashMap. // De kleinste x-afstand
                     keySet().
                     iterator().
                     next();
@@ -66,5 +79,6 @@ public class Player extends Component  {
             }
         }
     }
+
 
 }
