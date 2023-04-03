@@ -7,12 +7,15 @@ import com.almasb.fxgl.entity.Entity;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Main extends GameApplication {
     private Entity player;
+    private ArrayList<Entity> ladders = new ArrayList<>(); // VOEG ALLE LADDERS HIERAAN TOE
 
 
     @Override
@@ -38,11 +41,14 @@ public class Main extends GameApplication {
         onKey(KeyCode.W, () -> {
             // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
             // Als afstand kleiner is dan x ga de ladder op
+            player.getComponent(Player.class).climb(1, this.ladders);
         });
 
         onKey(KeyCode.S, () -> {
             // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
             // Als afstand kleiner is dan x ga de ladder op
+            player.getComponent(Player.class).climb(-1, this.ladders);
+
         });
     }
 
@@ -53,6 +59,15 @@ public class Main extends GameApplication {
                 .view("vincent-spijkers-pixilart.png")
                 .with(new Player())
                 .buildAndAttach();
+
+        Entity ladder = FXGL.entityBuilder()
+                .at(500, 220)
+                .view(new Rectangle(30, 100, Color.BLUE))
+                .buildAndAttach();
+
+        this.ladders.add(ladder);
+
+
     }
 
     @Override
