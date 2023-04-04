@@ -42,13 +42,42 @@ public class Main extends GameApplication {
         ground1.setNewGround(50, 750, 700, 20);
         this.grounds.add(ground1);
 
-        Ground ground2 = new Ground(-145, 540, 342, false);
-        ground2.setNewGround(50, 620, 700, 20);
+        Ground ground2 = new Ground(-95, 380, 342, false);
+        ground2.setNewGround(100, 620, 500, 20);
         this.grounds.add(ground2);
 
+        Ground ground3 = new Ground(5, 540, 212, false);
+        ground3.setNewGround(200, 490, 550, 20);
+        this.grounds.add(ground3);
+
+        Ground ground4 = new Ground(-95, 490, 82, false);
+        ground4.setNewGround(100, 360, 600, 20);
+        this.grounds.add(ground4);
+
+        Ground ground5 = new Ground(-145, 540, -48, false);
+        ground5.setNewGround(50, 230, 700, 20);
+        this.grounds.add(ground5);
+
+
         Ladder ladder1 = new Ladder(true);
-        ladder1.setNewLadder(450, 648);
+        ladder1.setNewLadder(500, 648);
         this.ladders.add(ladder1);
+
+        Ladder ladder2 = new Ladder(true);
+        ladder2.setNewLadder(250, 518);
+        this.ladders.add(ladder2);
+
+        Ladder ladder3 = new Ladder(true);
+        ladder3.setNewLadder(450, 388);
+        this.ladders.add(ladder3);
+
+        Ladder ladder4 = new Ladder(true);
+        ladder4.setNewLadder(650, 258);
+        this.ladders.add(ladder4);
+
+        Ladder ladder5 = new Ladder(true);
+        ladder5.setNewLadder(300, 258);
+        this.ladders.add(ladder5);
 
         this.player1.setNewPlayer();
     }
@@ -88,48 +117,46 @@ public class Main extends GameApplication {
         });
 
         FXGL.onKeyDown(KeyCode.SPACE, ()->{
-            if(!this.playerLadderTouch) {
-                this.player1.playerJump();
-            }
+            this.player1.playerJump();
+
         });
 
         FXGL.onKey(KeyCode.W, ()->{
-            int nextGround = 0;
-            for(Ground ground: this.grounds) {
-                if(nextGround == 1){
-                    System.out.println(ground.getGroundBottom());
-                    if(player1.getPlayer().getY() == ground.getGroundBottom()){
-
+            for(int i = 0; i < this.grounds.size(); i++){
+                if(grounds.get(i).isActive() && this.grounds.size() > i + 1){
+                    if(player1.getPlayer().getY() == grounds.get(i + 1).getGroundBottom()){
+                        for(Ground ground: this.grounds) {
+                            ground.setActive(false);
+                        }
+                        playerLadderTouch = false;
+                        if(this.grounds.size() > i + 1){
+                            grounds.get(i + 1).setActive(true);
+                        }
                     }else{
                         if(this.playerLadderTouch){
                             this.player1.playerClimbLadderUp();
                         }
                     }
-                }
-                if(ground.isActive()) {
-                    nextGround = 1;
                 }
             }
         });
 
         FXGL.onKey(KeyCode.UP, ()->{
-            int nextGround = 0;
-            for(Ground ground: this.grounds) {
-                if(nextGround == 1){
-                    System.out.println(ground.getGroundBottom());
-                    if(player1.getPlayer().getY() == ground.getGroundBottom()){
-                        for(Ground ground2: this.grounds) {
-                            ground2.setActive(false);
+            for(int i = 0; i < this.grounds.size(); i++){
+                if(grounds.get(i).isActive() && this.grounds.size() > i + 1){
+                    if(player1.getPlayer().getY() == grounds.get(i + 1).getGroundBottom()){
+                        for(Ground ground: this.grounds) {
+                            ground.setActive(false);
                         }
-                        ground.setActive(true);
+                        playerLadderTouch = false;
+                        if(this.grounds.size() > i + 1){
+                            grounds.get(i + 1).setActive(true);
+                        }
                     }else{
                         if(this.playerLadderTouch){
                             this.player1.playerClimbLadderUp();
                         }
                     }
-                }
-                if(ground.isActive()) {
-                    nextGround = 1;
                 }
             }
         });
@@ -137,15 +164,13 @@ public class Main extends GameApplication {
         FXGL.onKey(KeyCode.S, ()->{
             for(Ground ground: this.grounds) {
                 if(ground.isActive()) {
-//                    if(player1.getPlayer().getY() <= ground.getGroundBottom()){
-//
-//                    }else{
-//                        if(this.playerLadderTouch){
-//                            this.player1.playerClimbLadderDown();
-//                        }
-//                    }
-                    this.player1.playerClimbLadderDown();
-                    System.out.println("ll");
+                    if(player1.getPlayer().getY() <= ground.getGroundBottom()){
+
+                    }else{
+                        if(this.playerLadderTouch){
+                            this.player1.playerClimbLadderDown();
+                        }
+                    }
                 }
             }
         });
@@ -205,6 +230,5 @@ public class Main extends GameApplication {
     public static void main(String[] args) {
         launch(args);
     }
-
 
 }

@@ -24,7 +24,7 @@ public class Ladder {
 
     public void setNewLadder(int x, int y){
         this.ladder = FXGL.entityBuilder()
-                .at(450, 648)
+                .at(x, y)
                 .viewWithBBox(this.LadderImage)
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.LADDER)

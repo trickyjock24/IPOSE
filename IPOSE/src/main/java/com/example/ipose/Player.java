@@ -39,6 +39,7 @@ public class Player extends Component  {
         }
         if (this.player.getX() < End && this.player.getY() == Bottom) {
             this.player.translateX(5);
+            System.out.println(this.player.getX());
         }
     }
 
@@ -49,6 +50,7 @@ public class Player extends Component  {
 
         if(this.player.getX() > End && this.player.getY() == Bottom){
             this.player.translateX(-5);
+            System.out.println(this.player.getX());
         }
     }
 
