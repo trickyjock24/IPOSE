@@ -8,14 +8,9 @@ public class Ladder {
     private Entity ladder;
     private String LadderImage = "ladder.png";
     private boolean active;
-    private boolean climbable = false;
 
     public boolean isActive() {
         return active;
-    }
-
-    public boolean isClimbable() {
-        return climbable;
     }
 
     public Ladder(boolean active) {

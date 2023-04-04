@@ -4,27 +4,17 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.time.LocalTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.Entity;
 import java.util.ArrayList;
-import java.util.Map;
-import com.almasb.fxgl.app.*;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
 public class Main extends GameApplication {
     private Player player1 = new Player();
     private boolean playerLadderTouch = false;
     private ArrayList<Ground> grounds = new ArrayList<>();
+    private ArrayList<PowerUp> powerUps = new ArrayList<>();
     private ArrayList<Ladder> ladders = new ArrayList<>();
 
 
@@ -79,6 +69,10 @@ public class Main extends GameApplication {
         ladder5.setNewLadder(300, 258);
         this.ladders.add(ladder5);
 
+        PowerUp powerUp1 = new PowerUp();
+        powerUp1.setNewPowerUp(150, 280);
+        this.powerUps.add(powerUp1);
+
         this.player1.setNewPlayer();
     }
 
@@ -117,8 +111,11 @@ public class Main extends GameApplication {
         });
 
         FXGL.onKeyDown(KeyCode.SPACE, ()->{
-            this.player1.playerJump();
-
+            for(Ground ground: this.grounds) {
+                if(ground.isActive()) {
+                    this.player1.playerJump(ground.getGroundBottom());
+                }
+            }
         });
 
         FXGL.onKey(KeyCode.W, ()->{
@@ -192,14 +189,15 @@ public class Main extends GameApplication {
 
         @Override
     protected void initPhysics(){
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.LADDER) {
-//            @Override
-//            protected void onCollision(Entity player, Entity ladder) {
-//                FXGL.inc("ladderTouch", 1);
-//                ladder1.removeFromWorld();
-//                Ladder1Cimb = true;
-//            }
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.POWERUP) {
+            @Override
+            protected void onCollision(Entity player, Entity powerUp) {
+                powerUp.removeFromWorld();
+                player1.setPlayerPowerup(true);
+            }
+        });
 
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.LADDER) {
             @Override
             protected void onCollisionBegin(Entity player, Entity ladder) {
                 System.out.println(player);
