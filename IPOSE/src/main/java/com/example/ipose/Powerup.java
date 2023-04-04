@@ -3,7 +3,7 @@ package com.example.ipose;
 import com.almasb.fxgl.entity.Entity;
 
 abstract class Powerup {
-    private boolean isEquiped;
+    private boolean isEquiped; // Ik vind dat dit + alle references er naar weg mag.
     private int secondsRemaining;
     private Player player;
 
