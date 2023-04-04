@@ -7,15 +7,6 @@ import com.almasb.fxgl.entity.components.CollidableComponent;
 public class Ladder {
     private Entity ladder;
     private String LadderImage = "ladder.png";
-    private boolean active;
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Ladder(boolean active) {
-        this.active = active;
-    }
 
     public void setNewLadder(int x, int y){
         this.ladder = FXGL.entityBuilder()

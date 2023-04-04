@@ -17,17 +17,14 @@ public class Player extends Component  {
     private Entity player;
     private String playerKant = "Voorkant";
     private String vincent1VoorkantImage = "Vincent1 Voorkant.png";
-    private String vincent2VoorkantImage = "Vincent2 Voorkant.png";
-    private String vincent3VoorkantImage = "Vincent3 Voorkant.png";
-    private String vincent1AchterkantImage = "Vincent1 Achterkant.png";
-    private String vincent2AchterkantImage = "Vincent2 Achterkant.png";
-    private String vincent3AchterkantImage = "Vincent3 Achterkant.png";
+    private String vincent1VoorkantFlipImage = "Vincent1 VoorkantFlip.png";
+    private String vincent1AchterkantImage = "VincentAchterkant.png";
 
     private boolean playerPowerup = false;
 
-    public void setNewPlayer(){
+    public void setNewPlayer(int x, int y){
         this.player = FXGL.entityBuilder()
-                .at(-100, 472)
+                .at(x, y)
                 .viewWithBBox(this.vincent1VoorkantImage)
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLAYER)
@@ -46,8 +43,8 @@ public class Player extends Component  {
     }
 
     public void playerToLeft(int End, int Bottom){
-        if(this.playerKant != "Achterkant"){
-            changeView(this.vincent1AchterkantImage, "Achterkant");
+        if(this.playerKant != "VoorkantFlip"){
+            changeView(this.vincent1VoorkantFlipImage, "VoorkantFlip");
         }
 
         if(this.player.getX() > End && this.player.getY() == Bottom){
@@ -66,10 +63,16 @@ public class Player extends Component  {
     }
 
     public void playerClimbLadderUp(){
+        if(this.playerKant != "Achterkant"){
+            changeView(this.vincent1AchterkantImage, "Achterkant");
+        }
         this.player.translateY(-5);
     }
 
     public void playerClimbLadderDown(){
+        if(this.playerKant != "Achterkant"){
+            changeView(this.vincent1AchterkantImage, "Achterkant");
+        }
         this.player.translateY(5);
     }
 
