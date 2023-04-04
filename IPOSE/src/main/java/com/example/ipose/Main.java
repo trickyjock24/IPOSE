@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.time.LocalTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,6 +13,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import java.util.ArrayList;
 import java.util.Map;
+import com.almasb.fxgl.app.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
@@ -43,7 +45,6 @@ public class Main extends GameApplication {
             if(this.playerKant != "Voorkant"){
                 changeView(this.playerVoorkant, "Voorkant");
             }
-            player.translateX(5);
 
         });
 
@@ -53,10 +54,10 @@ public class Main extends GameApplication {
             if(this.playerKant != "Achterkant"){
                 changeView(this.playerAchterkant, "Achterkant");
             }
-            player.translateX(-5);
 
 
         });
+
 
         onKey(KeyCode.W, () -> {
             // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
@@ -72,11 +73,7 @@ public class Main extends GameApplication {
         });
 
         FXGL.onKeyDown(KeyCode.SPACE, ()->{
-            // DIT MOET NAAR DE PLAYER KLASSE
-            player.translateY(-40);
-            getGameTimer().runOnceAfter(() -> {
-                player.translateY(40);
-            }, Duration.seconds(0.2));
+            player.getComponent(Player.class).jump();
         });
     }
 
@@ -96,6 +93,13 @@ public class Main extends GameApplication {
                 .scale(2, 2) // BIJ DEZE WAARDE IS DE HEIGHT ONGEVEER 120
                 .buildAndAttach();
 
+        Entity ladder2 = FXGL.entityBuilder()
+                .at(250, 180)
+                .view("ladder.png")
+                .with(new Player())
+                .scale(2, 2) // BIJ DEZE WAARDE IS DE HEIGHT ONGEVEER 120
+                .buildAndAttach();
+
 
         player = FXGL.entityBuilder()
                 .at(300, 300)
@@ -107,7 +111,7 @@ public class Main extends GameApplication {
 
 
         this.ladders.add(ladder);
-
+        this.ladders.add(ladder2);
 
     }
 

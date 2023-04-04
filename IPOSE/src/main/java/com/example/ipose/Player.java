@@ -1,14 +1,18 @@
 package com.example.ipose;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
+
 
 public class Player extends Component  {
-    private static final float MOVE_SPEED = 0.75f;
+    private static final float MOVE_SPEED = 3f;
     private static final int MIN_LADDER_AFSTAND = 20;
 
     // Dit is de hoogte van de ladder die gebruikt word voor de ladder berekeningen
@@ -16,12 +20,23 @@ public class Player extends Component  {
     // Ik heb dit gedaan door: (speler coordinaat bovenaan de ladder - speler coordinaat onderin de ladder)
     private static final int PLAYER_HEIGHT = 120;
 
+
+    public void jump() {
+        // DIT MOET NAAR DE PLAYER KLASSE
+        this.entity.translateY(-40);
+        getGameTimer().runOnceAfter(() -> {
+            this.entity.translateY(40);
+        }, Duration.seconds(0.2));
+
+    }
+
+
     public void move(int direction) { // 1 of -1
         entity.translateX(MOVE_SPEED * direction);
     }
 
 
-    public void climb(int direction, ArrayList<Entity> ladders) { // 1 = up, 2 = down
+    public void climb(int direction, ArrayList<Entity> ladders) { // 1 = up, -1 = down
         // Bereken de afstand naar de ladder toe:
         ArrayList<HashMap<Double, Double>> distances = new ArrayList<>(); // Een HashMap is net als een dictionary :)
 
@@ -37,7 +52,7 @@ public class Player extends Component  {
                 distanceY = (i.getY() + PLAYER_HEIGHT) - entity.getY(); // i.getHeight() is 0 dus tis broken :). De Height is ongeveer 120 bij een grootte van 2x2
             }
 
-            
+
             HashMap<Double, Double> lol = new HashMap<>();
             lol.put(distanceX, distanceY);
             distances.add(lol);
@@ -75,6 +90,9 @@ public class Player extends Component  {
             }
         }
     }
+
+
+
 
 
 }
