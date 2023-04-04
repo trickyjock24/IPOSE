@@ -19,6 +19,7 @@ public class Player extends Component  {
     // Als je de grootte van de ladder veranderd verander deze waarde ook
     // Ik heb dit gedaan door: (speler coordinaat bovenaan de ladder - speler coordinaat onderin de ladder)
     private static final int PLAYER_HEIGHT = 120;
+    private boolean isCliming = false;
 
 
     public void jump() {
@@ -32,7 +33,9 @@ public class Player extends Component  {
 
 
     public void move(int direction) { // 1 of -1
-        entity.translateX(MOVE_SPEED * direction);
+        if (!isCliming) {
+            entity.translateX(MOVE_SPEED * direction);
+        }
     }
 
 
@@ -76,17 +79,24 @@ public class Player extends Component  {
 
             // Als de speler bovenaan de ladder is, niet verder omhoog klimmen
             if (direction == 1 && smallestHashMap.get(smallestX) <= 0) {
+                isCliming = false;
                 return;
             }
 
             // Als de speler onderaan de ladder is, niet verder omlaag klimmen
             if (direction == -1 && smallestHashMap.get(smallestX) <= 0) {
+                isCliming = false;
                 return;
             }
 
             // Als de afstand tot de ladder kleiner is dan de minimum ladder afstand, verplaats de speler
             if (smallestX < MIN_LADDER_AFSTAND) {
                 entity.translateY(2 * -direction);
+                isCliming=true;
+                return;
+            }
+            else {
+                isCliming=false;
             }
         }
     }
