@@ -1,17 +1,20 @@
 package com.example.ipose;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.input.UserAction;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Set;
 
 
 public class Player extends Component  {
-    private static final int MOVE_SPEED = 5;
-    private static final int minLadderAfstand = 15;
+    private static final float MOVE_SPEED = 0.75f;
+    private static final int MIN_LADDER_AFSTAND = 20;
+
+    // Dit is de hoogte van de ladder die gebruikt word voor de ladder berekeningen
+    // Als je de grootte van de ladder veranderd verander deze waarde ook
+    // Ik heb dit gedaan door: (speler coordinaat bovenaan de ladder - speler coordinaat onderin de ladder)
+    private static final int PLAYER_HEIGHT = 120;
 
     public void move(int direction) { // 1 of -1
         entity.translateX(MOVE_SPEED * direction);
@@ -30,16 +33,8 @@ public class Player extends Component  {
                 distanceY = (i.getBottomY() * - 1) - (-1 * entity.getBottomY());
             }
             else {
-                // DE CODE IN DEZE ELSE STATEMENT IS BROKEN
-                // DIT IS DE REDEN DAT DE LADDER OMLAAG ZO KUT DOET
-                distanceY = i.getY() - i.getHeight() - entity.getY(); // i.getHeight() is 0 dus tis broken :). De Height is ongeveer 120 bij een grootte van 2x2
-
-                System.out.println("DISTANCE IS: " + distanceY);
-                System.out.println("LADDER HEIGHT IS: " + i.getHeight());
-                System.out.println("ENTITY BOTTOM Y: " + entity.getBottomY());
-                System.out.println("LADDER BOTTOM Y: " + i.getBottomY());
-                System.out.println("ENTITY Y: " + entity.getY());
-                System.out.println("LADDER Y: " + i.getY());
+                // ZORG ERVOOR DAT JE ALTIJD OP DE HOOGTE BENT VAN DE PLAYER_HEIGHT
+                distanceY = (i.getY() + PLAYER_HEIGHT) - entity.getY(); // i.getHeight() is 0 dus tis broken :). De Height is ongeveer 120 bij een grootte van 2x2
             }
 
             HashMap<Double, Double> lol = new HashMap<>();
@@ -69,12 +64,12 @@ public class Player extends Component  {
             }
 
             // Als de speler onderaan de ladder is, niet verder omlaag klimmen
-            if (direction == -1 && smallestHashMap.get(smallestX) >= 0) {
+            if (direction == -1 && smallestHashMap.get(smallestX) <= 0) {
                 return;
             }
 
             // Als de afstand tot de ladder kleiner is dan de minimum ladder afstand, verplaats de speler
-            if (smallestX < minLadderAfstand) {
+            if (smallestX < MIN_LADDER_AFSTAND) {
                 entity.translateY(2 * -direction);
             }
         }
