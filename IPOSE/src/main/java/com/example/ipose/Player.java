@@ -37,6 +37,7 @@ public class Player extends Component  {
                 distanceY = (i.getY() + PLAYER_HEIGHT) - entity.getY(); // i.getHeight() is 0 dus tis broken :). De Height is ongeveer 120 bij een grootte van 2x2
             }
 
+            
             HashMap<Double, Double> lol = new HashMap<>();
             lol.put(distanceX, distanceY);
             distances.add(lol);
