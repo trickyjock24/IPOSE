@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1116</x>
-      <y>540</y>
+      <x>1098</x>
+      <y>522</y>
       <w>270</w>
       <h>297</h>
     </coordinates>
@@ -24,8 +24,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>333</x>
-      <y>36</y>
+      <x>297</x>
+      <y>18</y>
       <w>216</w>
       <h>288</h>
     </coordinates>
@@ -47,8 +47,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
-      <y>540</y>
+      <x>801</x>
+      <y>522</y>
       <w>270</w>
       <h>288</h>
     </coordinates>
@@ -67,8 +67,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>252</x>
-      <y>540</y>
+      <x>234</x>
+      <y>522</y>
       <w>270</w>
       <h>297</h>
     </coordinates>
@@ -84,8 +84,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>567</x>
-      <y>540</y>
+      <x>549</x>
+      <y>522</y>
       <w>225</w>
       <h>288</h>
     </coordinates>
@@ -100,59 +100,61 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>369</x>
-      <y>315</y>
-      <w>90</w>
+      <x>351</x>
+      <y>297</y>
+      <w>72</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;250.0;80.0;10.0</additional_attributes>
+    <additional_attributes>10.0;250.0;60.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>315</y>
-      <w>288</w>
+      <x>396</x>
+      <y>297</y>
+      <w>306</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>300.0;250.0;10.0;10.0</additional_attributes>
+    <additional_attributes>320.0;250.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>315</y>
-      <w>549</w>
+      <x>396</x>
+      <y>297</y>
+      <w>567</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>590.0;250.0;10.0;10.0</additional_attributes>
+    <additional_attributes>610.0;250.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>315</y>
-      <w>846</w>
+      <x>396</x>
+      <y>297</y>
+      <w>864</w>
       <h>243</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>920.0;250.0;10.0;10.0</additional_attributes>
+    <additional_attributes>940.0;250.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1035</x>
-      <y>54</y>
-      <w>324</w>
-      <h>180</h>
+      <x>1017</x>
+      <y>36</y>
+      <w>396</w>
+      <h>306</h>
     </coordinates>
-    <panel_attributes>Superjump
+    <panel_attributes>SpeedPowerup
 --
-- int extraJumpForce
+- float initialSpeed
+_MOVE_SPEED_MULTIPLIER_
 --
+- &lt;&lt;create&gt;&gt; SpeedPowerup(secondsRemaining: int, player: Player)
 + startPowerup()
 + endPowerup()</panel_attributes>
     <additional_attributes/>
@@ -160,30 +162,33 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>621</x>
-      <y>54</y>
-      <w>324</w>
+      <x>558</x>
+      <y>36</y>
+      <w>369</w>
       <h>288</h>
     </coordinates>
-    <panel_attributes>Powerup
+    <panel_attributes>/Powerup/
 --
 - isEquipped: boolean
 - secondsRemaining: int
+- player: Player
 --
-- &lt;&lt;create&gt;&gt; Powerup(isEquipped: boolean, 
-secondsRemaining: int)
-
+- &lt;&lt;create&gt;&gt; Powerup(secondsRemaining: int, player: Player)
 - isEquipped(): boolean
 - getSecondsRemaining(): int
 - setSecondsRemaining(int secondsRemaining): void 
-</panel_attributes>
+
+/startPowerup/
+/endPowerup/
+
+ </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>936</x>
-      <y>171</y>
+      <x>918</x>
+      <y>153</y>
       <w>117</w>
       <h>27</h>
     </coordinates>
