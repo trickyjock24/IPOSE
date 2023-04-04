@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3874955c-978b-400a-8dab-5176d225f2a6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/IPOSE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IPOSE/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3874955c-978b-400a-8dab-5176d225f2a6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,12 +40,27 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Eren/Desktop/Opdrachtne/IPOSE/IPOSE/IPOSE",
+    "last_opened_file_path": "C:/Users/timde/OneDrive - Hogeschool Leiden/Documenten/Periode 3/IPOSE Praktische Opdracht Software Engineering/game",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="IPOSE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="IPOSE" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -57,6 +70,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680515062313</updated>
       <workItem from="1680515063929" duration="1774000" />
+      <workItem from="1680595076221" duration="17000" />
     </task>
     <servers />
   </component>
