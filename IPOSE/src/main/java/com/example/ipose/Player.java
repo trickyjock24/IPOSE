@@ -1,5 +1,4 @@
 package com.example.ipose;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import javafx.util.Duration;
@@ -12,14 +11,14 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
 
 
 public class Player extends Component  {
-    private static final float MOVE_SPEED = 3f;
-    private static final int MIN_LADDER_AFSTAND = 20;
-
     // Dit is de hoogte van de ladder die gebruikt word voor de ladder berekeningen
     // Als je de grootte van de ladder veranderd verander deze waarde ook
     // Ik heb dit gedaan door: (speler coordinaat bovenaan de ladder - speler coordinaat onderin de ladder)
     private static final int PLAYER_HEIGHT = 120;
-    private boolean isCliming = false;
+    private static final int MIN_LADDER_AFSTAND = 20;
+
+    private float moveSpeed = 3f;
+    private boolean isClimbing = false;
 
 
     public void jump() {
@@ -33,8 +32,8 @@ public class Player extends Component  {
 
 
     public void move(int direction) { // 1 of -1
-        if (!isCliming) {
-            entity.translateX(MOVE_SPEED * direction);
+        if (!isClimbing) {
+            entity.translateX(moveSpeed * direction);
         }
     }
 
@@ -79,29 +78,42 @@ public class Player extends Component  {
 
             // Als de speler bovenaan de ladder is, niet verder omhoog klimmen
             if (direction == 1 && smallestHashMap.get(smallestX) <= 0) {
-                isCliming = false;
+                isClimbing = false;
                 return;
             }
 
             // Als de speler onderaan de ladder is, niet verder omlaag klimmen
             if (direction == -1 && smallestHashMap.get(smallestX) <= 0) {
-                isCliming = false;
+                isClimbing = false;
                 return;
             }
 
             // Als de afstand tot de ladder kleiner is dan de minimum ladder afstand, verplaats de speler
             if (smallestX < MIN_LADDER_AFSTAND) {
                 entity.translateY(2 * -direction);
-                isCliming=true;
+                isClimbing =true;
                 return;
             }
             else {
-                isCliming=false;
+                isClimbing =false;
             }
         }
     }
 
+    // ROEP DEZE METHODE OP OM DE POWERUP TE ACTIVEREN.
+    public void enablePowerup(Powerup powerup) {
+        System.out.println("POWERUP IS GEACTIVEERD!");
+        powerup.startPowerup();
+    }
 
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
 
 
 

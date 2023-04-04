@@ -1,13 +1,20 @@
 package com.example.ipose;
 
-public class powerup {
+import com.almasb.fxgl.entity.Entity;
+
+abstract class Powerup {
     private boolean isEquiped;
     private int secondsRemaining;
+    private Player player;
 
-    public powerup(boolean isEquiped, int secondsRemaining) {
-        this.isEquiped = isEquiped;
+    public Powerup(int secondsRemaining, Player player) {
+        this.isEquiped = false;
         this.secondsRemaining = secondsRemaining;
+        this.player = player;
     }
+
+    abstract void startPowerup();
+    abstract void endPowerup();
 
     public boolean isEquiped() {
         return isEquiped;
@@ -23,5 +30,13 @@ public class powerup {
 
     public void setSecondsRemaining(int secondsRemaining) {
         this.secondsRemaining = secondsRemaining;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

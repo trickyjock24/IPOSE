@@ -38,7 +38,6 @@ public class Main extends GameApplication {
     @Override
     protected void initInput() {
         // Input is helaas nog hier
-
         onKey(KeyCode.D, () -> {
             player.getComponent(Player.class).move(1); // move right
 
@@ -58,7 +57,6 @@ public class Main extends GameApplication {
 
         });
 
-
         onKey(KeyCode.W, () -> {
             // Bereken de afstand tussen de speler en ladder d.m.v stelling van pythagoras
             // Als afstand kleiner is dan x ga de ladder op
@@ -72,7 +70,7 @@ public class Main extends GameApplication {
 
         });
 
-        FXGL.onKeyDown(KeyCode.SPACE, ()->{
+        FXGL.onKeyDown(KeyCode.SPACE, ()-> {
             player.getComponent(Player.class).jump();
         });
     }
@@ -109,7 +107,13 @@ public class Main extends GameApplication {
                 .buildAndAttach();
 
 
+        // Dit is een voorbeeld van hoe je een power-up activeert. Uncomment de onderste code.
+        // De onderstaande code hoort ge-runt te worden wanneer de player collide met een powerup
+        // Implementeer voortaan alle power-ups zoals de speedPowerup.java bestand
+        // player.getComponent(Player.class).enablePowerup(new SpeedPowerup(5, player.getComponent(Player.class)));
 
+
+        // Voeg alle ladders toe aan de lijst
         this.ladders.add(ladder);
         this.ladders.add(ladder2);
 
