@@ -50,9 +50,6 @@ public class Ground {
         return groundEndRight;
     }
 
-    public void setGroundEndRight(int groundEndRight) {
-        this.groundEndRight = groundEndRight;
-    }
 
     public boolean isActive() {
         return active;
@@ -64,9 +61,5 @@ public class Ground {
 
     public int getGroundBottom() {
         return groundBottom;
-    }
-
-    public void setGroundBottom(int groundBottom) {
-        this.groundBottom = groundBottom;
     }
 }

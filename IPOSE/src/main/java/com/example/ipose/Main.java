@@ -206,15 +206,12 @@ public class Main extends GameApplication {
                 System.out.println(ladder);
 
                 playerLadderTouch = true;
-//
-//                setPlayerLadderTouch(true);
             }
 
             @Override
             protected void onCollisionEnd(Entity player, Entity ladder) {
                 System.out.println(player);
                 System.out.println(ladder);
-//                setPlayerLadderTouch(false);
                 playerLadderTouch = false;
             }
         });
