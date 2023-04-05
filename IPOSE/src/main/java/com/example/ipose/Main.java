@@ -42,6 +42,7 @@ public class Main extends GameApplication {
         settings.setHeight(800);
         settings.setTitle("Donkey Kong");
         settings.setVersion("0.1");
+        settings.setDeveloperMenuEnabled(true);
     }
 
     private void gameEnd(boolean reachedEndOfGame) {
@@ -68,7 +69,6 @@ public class Main extends GameApplication {
     }
 
     private void createBarrol2(){
-        System.out.println("llllll");
         this.timerAction = getGameTimer().runAtInterval(() -> {
             createBarrol();
         }, Duration.seconds(1));
@@ -77,7 +77,7 @@ public class Main extends GameApplication {
     private void createBarrol(){
         FXGL.inc("score", +50);
         Barrel barrel1 = new Barrel();
-        barrel1.setNewBarrel(-120, -18);
+        barrel1.setNewBarrel(-120, -11);
         this.barrels.add(barrel1);
         Barrel curentBarrol = null;
         for (int i = 0; i < this.barrels.size(); i++) {
@@ -211,7 +211,7 @@ public class Main extends GameApplication {
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.BARREL) {
             @Override
-            protected void onCollisionBegin(Entity player, Entity barrol) {
+            protected void onCollision(Entity player, Entity barrol) {
                 if(player1.isPlayerPowerup()){
                     player1.setPlayerPowerup(false);
                 }else{
@@ -315,11 +315,11 @@ public class Main extends GameApplication {
         this.setLadderForGameLadders(new Ladder(), 400, 128);
 
         PowerUp powerUp1 = new PowerUp();
-        powerUp1.setNewPowerUp(-10, 128);
+        powerUp1.setNewPowerUp(-10, 120);
         this.powerUps.add(powerUp1);
 
         PowerUp powerUp2 = new PowerUp();
-        powerUp2.setNewPowerUp(550, 518);
+        powerUp2.setNewPowerUp(550, 510);
         this.powerUps.add(powerUp2);
 
         this.princes1.setNewPrinces(350, -250);

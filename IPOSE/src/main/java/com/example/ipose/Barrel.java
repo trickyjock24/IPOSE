@@ -3,6 +3,9 @@ package com.example.ipose;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -20,6 +23,9 @@ public class Barrel {
                 .type(EntityTypes.BARREL)
                 .scale(0.1, 0.1)
                 .buildAndAttach();
+        this.barrel.getBoundingBoxComponent().clearHitBoxes();
+        HitBox hitBox = new HitBox(new Point2D(70, 70), BoundingShape.circle(150));
+        this.barrel.getBoundingBoxComponent().addHitBox(hitBox);
     }
 
     public void barrelRoll(double playerX){
