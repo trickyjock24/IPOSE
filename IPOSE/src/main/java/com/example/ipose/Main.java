@@ -14,7 +14,22 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
 
 
@@ -28,6 +43,9 @@ public class Main extends GameApplication {
     private ArrayList<Ladder> ladders = new ArrayList<>();
     private ArrayList<PowerUp> powerUps = new ArrayList<>();
     private ArrayList<Barrel> barrels = new ArrayList<>();
+    private String userName;
+
+    private int level;
 
 
     @Override
@@ -43,6 +61,8 @@ public class Main extends GameApplication {
         StringBuilder builder = new StringBuilder();
         if (reachedEndOfGame) {
             builder.append("You have reached the end of the game!\n\n");
+            FileManager FM = new FileManager();
+            FM.setMaxLevel(this.userName, this.level+1);
         }else{
             builder.append("Game Over!\n\n");
         }
@@ -55,69 +75,7 @@ public class Main extends GameApplication {
 
     @Override
     protected void initGame(){
-        Ground ground1 = new Ground(-145, 540, 472, true);
-        ground1.setNewGround(50, 750, 700, 20);
-        this.grounds.add(ground1);
 
-        Ground ground2 = new Ground(-95, 390, 342, false);
-        ground2.setNewGround(100, 620, 500, 20);
-        this.grounds.add(ground2);
-
-        Ground ground3 = new Ground(5, 540, 212, false);
-        ground3.setNewGround(200, 490, 550, 20);
-        this.grounds.add(ground3);
-
-        Ground ground4 = new Ground(-95, 490, 82, false);
-        ground4.setNewGround(100, 360, 600, 20);
-        this.grounds.add(ground4);
-
-        Ground ground5 = new Ground(-145, 540, -48, false);
-        ground5.setNewGround(50, 230, 700, 20);
-        this.grounds.add(ground5);
-
-        Ground ground6 = new Ground(165, 400, -178, false);
-        ground6.setNewGround(360, 100, 250, 20);
-        this.grounds.add(ground6);
-
-        Ladder ladder1 = new Ladder();
-        ladder1.setNewLadder(500, 648);
-        this.ladders.add(ladder1);
-
-        Ladder ladder2 = new Ladder();
-        ladder2.setNewLadder(250, 518);
-        this.ladders.add(ladder2);
-
-        Ladder ladder3 = new Ladder();
-        ladder3.setNewLadder(450, 388);
-        this.ladders.add(ladder3);
-
-        Ladder ladder4 = new Ladder();
-        ladder4.setNewLadder(200, 258);
-        this.ladders.add(ladder4);
-
-        Ladder ladder5 = new Ladder();
-        ladder5.setNewLadder(650, 258);
-        this.ladders.add(ladder5);
-
-        Ladder ladder6 = new Ladder();
-        ladder6.setNewLadder(400, 128);
-        this.ladders.add(ladder6);
-
-        PowerUp powerUp1 = new PowerUp();
-        powerUp1.setNewPowerUp(150, 280);
-        this.powerUps.add(powerUp1);
-
-        PowerUp powerUp2 = new PowerUp();
-        powerUp2.setNewPowerUp(700, 450);
-        this.powerUps.add(powerUp2);
-
-        this.princes1.setNewPrinces(350, -250);
-        this.donkeyKong1.setNewDonkeyKong(-150, -248);
-
-        this.player1.setNewPlayer(-100, 472);
-        getGameTimer().runOnceAfter(() -> {
-            createBarrol2();
-        }, Duration.seconds(0.2));
     }
 
     private void createBarrol2(){
@@ -322,8 +280,7 @@ public class Main extends GameApplication {
     }
 
 
-    @Override
-    protected void initUI() {
+    protected void initialiseGame() {
         Label levelLabel = new Label("Level: ");
         Label levelNumber = new Label("1");
         levelLabel.setTranslateX(50);
@@ -336,6 +293,14 @@ public class Main extends GameApplication {
         FXGL.getGameScene().addUINode(levelLabel);
         FXGL.getGameScene().addUINode(levelNumber);
 
+        Label userLabel = new Label("User: " + this.userName);
+
+        userLabel.setTranslateX(50);
+        userLabel.setTranslateY(70);
+        userLabel.setStyle("-fx-text-fill: white");
+
+        FXGL.getGameScene().addUINode(userLabel);
+
         Label scoreLabel = new Label("Score: ");
         Label scoreNumber = new Label("0");
         scoreLabel.setTranslateX(50);
@@ -347,6 +312,179 @@ public class Main extends GameApplication {
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreLabel);
         FXGL.getGameScene().addUINode(scoreNumber);
+
+        FXGL.getGameScene().setBackgroundColor(Color.BLACK);
+
+
+        Ground ground1 = new Ground(-145, 540, 472, true);
+        ground1.setNewGround(50, 750, 700, 20);
+        this.grounds.add(ground1);
+
+        Ground ground2 = new Ground(-95, 390, 342, false);
+        ground2.setNewGround(100, 620, 500, 20);
+        this.grounds.add(ground2);
+
+        Ground ground3 = new Ground(5, 540, 212, false);
+        ground3.setNewGround(200, 490, 550, 20);
+        this.grounds.add(ground3);
+
+        Ground ground4 = new Ground(-95, 490, 82, false);
+        ground4.setNewGround(100, 360, 600, 20);
+        this.grounds.add(ground4);
+
+        Ground ground5 = new Ground(-145, 540, -48, false);
+        ground5.setNewGround(50, 230, 700, 20);
+        this.grounds.add(ground5);
+
+        Ground ground6 = new Ground(165, 400, -178, false);
+        ground6.setNewGround(360, 100, 250, 20);
+        this.grounds.add(ground6);
+
+        Ladder ladder1 = new Ladder();
+        ladder1.setNewLadder(500, 648);
+        this.ladders.add(ladder1);
+
+        Ladder ladder2 = new Ladder();
+        ladder2.setNewLadder(250, 518);
+        this.ladders.add(ladder2);
+
+        Ladder ladder3 = new Ladder();
+        ladder3.setNewLadder(450, 388);
+        this.ladders.add(ladder3);
+
+        Ladder ladder4 = new Ladder();
+        ladder4.setNewLadder(200, 258);
+        this.ladders.add(ladder4);
+
+        Ladder ladder5 = new Ladder();
+        ladder5.setNewLadder(650, 258);
+        this.ladders.add(ladder5);
+
+        Ladder ladder6 = new Ladder();
+        ladder6.setNewLadder(400, 128);
+        this.ladders.add(ladder6);
+
+        PowerUp powerUp1 = new PowerUp();
+        powerUp1.setNewPowerUp(150, 280);
+        this.powerUps.add(powerUp1);
+
+        PowerUp powerUp2 = new PowerUp();
+        powerUp2.setNewPowerUp(700, 450);
+        this.powerUps.add(powerUp2);
+
+        this.princes1.setNewPrinces(350, -250);
+        this.donkeyKong1.setNewDonkeyKong(-150, -248);
+
+        this.player1.setNewPlayer(-100, 472);
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2();
+        }, Duration.seconds(0.2));
+    }
+
+
+    @Override
+    protected void initUI() {
+        Label username = new Label("LOGIN:");
+        username.setStyle("-fx-text-fill: gray");
+        username.setTranslateX(300);
+        username.setTranslateY(250);
+        username.setFont(new Font(70)); // set font size to 30
+
+        TextField TF = new TextField();
+        TF.setStyle("-fx-text-fill: gray");
+        TF.setTranslateX(250);
+        TF.setTranslateY(450);
+        TF.setPrefWidth(350);
+        TF.setPrefHeight(20);
+
+        Button button = new Button("LOGIN");
+        button.setStyle("-fx-text-fill: gray");
+        button.setTranslateX(300);
+        button.setTranslateY(520);
+        button.setPrefSize(200, 20);
+
+
+
+        button.setOnAction(actionEvent -> {
+            this.userName = TF.getText();
+            System.out.println("Usesrname is: " + this.userName);
+
+            TF.setVisible(false);
+            button.setVisible(false);
+            username.setVisible(false);
+
+            FileManager FM = new FileManager();
+            int maxLevel = FM.getMaxLevel(this.userName);
+
+
+            Button b1 = new Button("LEVEL 1");
+            b1.setStyle("-fx-text-fill: gray");
+            b1.setTranslateX(160);
+            b1.setTranslateY(230);
+            b1.setPrefSize(450, 100);
+
+
+            Button b2 = new Button("LEVEL 2");
+            b2.setStyle("-fx-text-fill: gray");
+            b2.setTranslateX(160);
+            b2.setTranslateY(350);
+            b2.setPrefSize(450, 100);
+
+
+            Button b3 = new Button("LEVEL 3");
+            b3.setStyle("-fx-text-fill: gray");
+            b3.setTranslateX(160);
+            b3.setTranslateY(480);
+            b3.setPrefSize(450, 100);
+
+
+            FXGL.getGameScene().addUINode(b1);
+            FXGL.getGameScene().addUINode(b3);
+            FXGL.getGameScene().addUINode(b2);
+
+            b1.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 1;
+                this.initialiseGame();
+            });
+
+            b2.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 2;
+                this.initialiseGame();
+            });
+
+            b3.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 3;
+                this.initialiseGame();
+            });
+
+
+            if (maxLevel == 1) {
+                b3.setVisible(false);
+                b2.setVisible(false);
+            }
+
+            if (maxLevel == 2) {
+                b3.setVisible(false);
+            }
+
+        });
+
+
+        FXGL.getGameScene().addUINode(username);
+        FXGL.getGameScene().addUINode(button);
+        FXGL.getGameScene().addUINode(TF);
 
         FXGL.getGameScene().setBackgroundColor(Color.BLACK);
     }
