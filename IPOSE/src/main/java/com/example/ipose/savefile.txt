@@ -8,7 +8,4 @@ ll - 1
 kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
-k - 1
-9 - 1
-j - 1
-lkk - 1
+
