@@ -97,6 +97,4 @@ public class Player extends Component  {
             this.player.getViewComponent().setOpacity(1);
         }
     }
-
-
 }

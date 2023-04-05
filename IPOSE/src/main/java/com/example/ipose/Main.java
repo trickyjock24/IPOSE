@@ -75,20 +75,18 @@ public class Main extends GameApplication {
     }
 
     private void createBarrol(){
-        if(!this.levelScreen) {
-            FXGL.inc("score", +50);
-            Barrel barrel1 = new Barrel();
-            barrel1.setNewBarrel(100, 220);
-            this.barrels.add(barrel1);
-            Barrel curentBarrol = null;
-            for (int i = 0; i < this.barrels.size(); i++) {
-                curentBarrol = this.barrels.get(i);
-            }
-            Barrel finalCurentBarrol = curentBarrol;
-            this.timerAction2 = getGameTimer().runAtInterval(() -> {
-                finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() + 215);
-            }, Duration.seconds(0.001));
+        FXGL.inc("score", +50);
+        Barrel barrel1 = new Barrel();
+        barrel1.setNewBarrel(100, 220);
+        this.barrels.add(barrel1);
+        Barrel curentBarrol = null;
+        for (int i = 0; i < this.barrels.size(); i++) {
+            curentBarrol = this.barrels.get(i);
         }
+        Barrel finalCurentBarrol = curentBarrol;
+        this.timerAction2 = getGameTimer().runAtInterval(() -> {
+            finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() + 215);
+        }, Duration.seconds(0.001));
     }
 
     private void playerToRight(){
@@ -124,19 +122,20 @@ public class Main extends GameApplication {
                 activeNumber = i;
             }
         }
-
-        if(player1.getPlayer().getY() == activeNextGround.getGroundBottom()){
-            for(Ground ground: this.grounds) {
-                ground.setActive(false);
-            }
-            playerLadderTouch = false;
-            if(this.grounds.size() > activeNumber + 1){
-                activeNextGround.setActive(true);
-                player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
-            }
-        }else{
-            if(this.playerLadderTouch){
-                this.player1.playerClimbLadderUp();
+        if(activeNextGround != null){
+            if(player1.getPlayer().getY() == activeNextGround.getGroundBottom()){
+                for(Ground ground: this.grounds) {
+                    ground.setActive(false);
+                }
+                playerLadderTouch = false;
+                if(this.grounds.size() > activeNumber + 1){
+                    activeNextGround.setActive(true);
+                    player1.changeView(player1.getVincent1VoorkantImage(), "Voorkant");
+                }
+            }else{
+                if(this.playerLadderTouch){
+                    this.player1.playerClimbLadderUp();
+                }
             }
         }
     }
@@ -145,7 +144,7 @@ public class Main extends GameApplication {
         for(Ground ground: this.grounds) {
             if(ground.isActive()) {
                 if(player1.getPlayer().getY() <= ground.getGroundBottom()){
-                    player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
+                    player1.changeView(player1.getVincent1VoorkantImage(), "Voorkant");
                 }else{
                     if(this.playerLadderTouch){
                         this.player1.playerClimbLadderDown();
@@ -263,7 +262,6 @@ public class Main extends GameApplication {
     }
 
     protected void initialiseGame1() {
-        this.levelScreen = false;
         initGameUI();
         Ground ground1 = new Ground(-145, 540, 472, true);
         ground1.setNewGround(50, 750, 700, 20);
@@ -334,19 +332,24 @@ public class Main extends GameApplication {
     }
 
     protected void initialiseGame2() {
-        this.levelScreen = false;
         initGameUI();
     }
 
     protected void initialiseGame3() {
-        this.levelScreen = false;
         initGameUI();
     }
 
     protected void initialiseExit() {
+        FXGL.set("score", 0);
         FXGL.getGameScene().clearGameViews();
+        FXGL.getPhysicsWorld().clear();
         this.barrels = new ArrayList<>();
-        this.player1 = new Player();
+        if(this.player1.getPlayer() != null){
+            this.player1.getPlayer().setX(-100);
+            this.player1.getPlayer().setY(472);
+            this.player1.setPlayerPowerup(false);
+            this.player1.changeView(this.player1.getVincent1VoorkantImage(), "Voorkant");
+        }
         this.princes1 = new Princes();
         this.donkeyKong1 = new DonkeyKong();
         this.playerLadderTouch = false;
@@ -356,10 +359,13 @@ public class Main extends GameApplication {
 
         if(this.timerAction != null){
             this.timerAction.expire();
+            this.timerAction = null;
+            System.out.println("ll");
         }
 
         if(this.timerAction2 != null){
             this.timerAction2.expire();
+            this.timerAction2 = null;
         }
     }
 
@@ -401,7 +407,6 @@ public class Main extends GameApplication {
     }
 
     protected void LevelScreen(){
-        this.levelScreen = true;
         this.initialiseExit();
 
         FileManager FM = new FileManager();
