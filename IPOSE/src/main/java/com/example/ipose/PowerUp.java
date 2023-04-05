@@ -8,14 +8,15 @@ import javafx.scene.shape.Circle;
 
 public class PowerUp {
     private Entity powerup;
+    private String powerUpImage = "potion-bg.png";
 
     public void setNewPowerUp(int x, int y){
         this.powerup = FXGL.entityBuilder()
                 .at(x, y)
-                .viewWithBBox(new Circle(5, Color.GREEN))
+                .viewWithBBox(powerUpImage)
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.POWERUP)
-                .scale(2, 2)
+                .scale(0.08, 0.08)
                 .buildAndAttach();
     }
 }

@@ -4,3 +4,7 @@ hi - 2
 tim - 1
 l - 1
 kk - 1
+ll - 1
+kkkkkkkkkkkkkkkkkkkkkkkk - 1
+kkk - 1
+lk - 1

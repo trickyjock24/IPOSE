@@ -211,7 +211,7 @@ public class Main extends GameApplication {
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.BARREL) {
             @Override
-            protected void onCollisionEnd(Entity player, Entity barrol) {
+            protected void onCollisionBegin(Entity player, Entity barrol) {
                 if(player1.isPlayerPowerup()){
                     player1.setPlayerPowerup(false);
                 }else{
@@ -258,7 +258,12 @@ public class Main extends GameApplication {
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreNumber);
 
-        FXGL.getGameScene().setBackgroundColor(Color.BLACK);
+        FXGL.getGameScene().setBackgroundColor(Color.rgb(26,26,26));
+    }
+
+    private void setLadderForGameLadders(Ladder ladder, int ladderX, int ladderY) {
+        ladder.setNewLadder(ladderX, ladderY);
+        this.ladders.add(ladder);
     }
 
     protected void initialiseGame1() {
@@ -310,11 +315,11 @@ public class Main extends GameApplication {
         this.setLadderForGameLadders(new Ladder(), 400, 128);
 
         PowerUp powerUp1 = new PowerUp();
-        powerUp1.setNewPowerUp(150, 280);
+        powerUp1.setNewPowerUp(-10, 128);
         this.powerUps.add(powerUp1);
 
         PowerUp powerUp2 = new PowerUp();
-        powerUp2.setNewPowerUp(700, 450);
+        powerUp2.setNewPowerUp(550, 518);
         this.powerUps.add(powerUp2);
 
         this.princes1.setNewPrinces(350, -250);
@@ -324,11 +329,6 @@ public class Main extends GameApplication {
         getGameTimer().runOnceAfter(() -> {
             createBarrol2();
         }, Duration.seconds(0.2));
-    }
-
-    private void setLadderForGameLadders(Ladder ladder, int ladderX, int ladderY) {
-        ladder.setNewLadder(ladderX, ladderY);
-        this.ladders.add(ladder);
     }
 
     protected void initialiseGame2() {
@@ -403,7 +403,7 @@ public class Main extends GameApplication {
         FXGL.getGameScene().addUINode(username);
         FXGL.getGameScene().addUINode(button);
         FXGL.getGameScene().addUINode(TF);
-        FXGL.getGameScene().setBackgroundColor(Color.BLACK);
+        FXGL.getGameScene().setBackgroundColor(Color.rgb(26,26,26));
     }
 
     protected void LevelScreen(){
