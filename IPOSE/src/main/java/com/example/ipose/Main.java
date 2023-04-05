@@ -44,8 +44,8 @@ public class Main extends GameApplication {
     private ArrayList<PowerUp> powerUps = new ArrayList<>();
     private ArrayList<Barrel> barrels = new ArrayList<>();
     private String userName;
-
     private int level;
+
 
 
     @Override
@@ -281,23 +281,17 @@ public class Main extends GameApplication {
 
 
     protected void initialiseGame() {
-        Label levelLabel = new Label("Level: ");
-        Label levelNumber = new Label("1");
+        Label levelLabel = new Label("Level: " + this.level);
         levelLabel.setTranslateX(50);
         levelLabel.setTranslateY(20);
         levelLabel.setStyle("-fx-text-fill: gray");
-        levelNumber.setTranslateX(100);
-        levelNumber.setTranslateY(20);
-        levelNumber.setStyle("-fx-text-fill: gray");
-        levelNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
         FXGL.getGameScene().addUINode(levelLabel);
-        FXGL.getGameScene().addUINode(levelNumber);
 
         Label userLabel = new Label("User: " + this.userName);
 
         userLabel.setTranslateX(50);
         userLabel.setTranslateY(70);
-        userLabel.setStyle("-fx-text-fill: white");
+        userLabel.setStyle("-fx-text-fill: gray");
 
         FXGL.getGameScene().addUINode(userLabel);
 
@@ -306,7 +300,7 @@ public class Main extends GameApplication {
         scoreLabel.setTranslateX(50);
         scoreLabel.setTranslateY(40);
         scoreLabel.setStyle("-fx-text-fill: gray");
-        scoreNumber.setTranslateX(100);
+        scoreNumber.setTranslateX(85);
         scoreNumber.setTranslateY(40);
         scoreNumber.setStyle("-fx-text-fill: gray");
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
