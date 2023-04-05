@@ -59,7 +59,7 @@ public class Main extends GameApplication {
                 .append(this.level);
 
 
-        FXGL.getDialogService().showMessageBox(builder.toString(), () -> LevelScreen());
+        FXGL.getDialogService().showMessageBox(builder.toString(), this::LevelScreen);
     }
 
     @Override
@@ -69,9 +69,7 @@ public class Main extends GameApplication {
 
     private void createBarrol2(){
         System.out.println("llllll");
-        this.timerAction = getGameTimer().runAtInterval(() -> {
-            createBarrol();
-        }, Duration.seconds(1));
+        this.timerAction = getGameTimer().runAtInterval(this::createBarrol, Duration.seconds(1));
     }
 
     private void createBarrol(){
@@ -80,8 +78,8 @@ public class Main extends GameApplication {
         barrel1.setNewBarrel(-120, -18);
         this.barrels.add(barrel1);
         Barrel curentBarrol = null;
-        for (int i = 0; i < this.barrels.size(); i++) {
-            curentBarrol = this.barrels.get(i);
+        for (Barrel barrel : this.barrels) {
+            curentBarrol = barrel;
         }
         Barrel finalCurentBarrol = curentBarrol;
         this.timerAction2 = getGameTimer().runAtInterval(() -> {
@@ -156,41 +154,23 @@ public class Main extends GameApplication {
 
     @Override
     protected void initInput() {
-        FXGL.onKey(KeyCode.D, ()->{
-            playerToRight();
-        });
+        FXGL.onKey(KeyCode.D, this::playerToRight);
 
-        FXGL.onKey(KeyCode.RIGHT, ()->{
-            playerToRight();
-        });
+        FXGL.onKey(KeyCode.RIGHT, this::playerToRight);
 
-        FXGL.onKey(KeyCode.A, ()->{
-            playerToLeft();
-        });
+        FXGL.onKey(KeyCode.A, this::playerToLeft);
 
-        FXGL.onKey(KeyCode.LEFT, ()->{
-            playerToLeft();
-        });
+        FXGL.onKey(KeyCode.LEFT, this::playerToLeft);
 
-        FXGL.onKeyDown(KeyCode.SPACE, ()->{
-            playerSpace();
-        });
+        FXGL.onKeyDown(KeyCode.SPACE, this::playerSpace);
 
-        FXGL.onKey(KeyCode.W, ()->{
-            playerUp();
-        });
+        FXGL.onKey(KeyCode.W, this::playerUp);
 
-        FXGL.onKey(KeyCode.UP, ()->{
-            playerUp();
-        });
+        FXGL.onKey(KeyCode.UP, this::playerUp);
 
-        FXGL.onKey(KeyCode.S, ()->{
-            playerDown();
-        });
+        FXGL.onKey(KeyCode.S, this::playerDown);
 
-        FXGL.onKey(KeyCode.DOWN, ()->{
-            playerDown();
-        });
+        FXGL.onKey(KeyCode.DOWN, this::playerDown);
     }
 
     @Override
@@ -292,27 +272,13 @@ public class Main extends GameApplication {
         ground6.setNewGround(360, 100, 250, 20);
         this.grounds.add(ground6);
 
-        Ladder ladder1 = new Ladder();
-        ladder1.setNewLadder(500, 648);
-        this.ladders.add(ladder1);
-
-        Ladder ladder2 = new Ladder();
-        ladder2.setNewLadder(250, 518);
-        this.ladders.add(ladder2);
-
-        Ladder ladder3 = new Ladder();
-        ladder3.setNewLadder(450, 388);
-        this.ladders.add(ladder3);
-
-        Ladder ladder4 = new Ladder();
-        ladder4.setNewLadder(200, 258);
-        this.ladders.add(ladder4);
-
-        Ladder ladder5 = new Ladder();
-        ladder5.setNewLadder(650, 258);
-        this.ladders.add(ladder5);
-
         this.setLadderForGameLadders(new Ladder(), 400, 128);
+        this.setLadderForGameLadders(new Ladder(), 500, 648);
+        this.setLadderForGameLadders(new Ladder(), 250, 518);
+        this.setLadderForGameLadders(new Ladder(), 450, 388);
+        this.setLadderForGameLadders(new Ladder(), 200, 258);
+        this.setLadderForGameLadders(new Ladder(), 650, 258);
+
 
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(-10, 128);
@@ -326,9 +292,7 @@ public class Main extends GameApplication {
         this.donkeyKong1.setNewDonkeyKong(-150, -248);
 
         this.player1.setNewPlayer(-100, 472);
-        getGameTimer().runOnceAfter(() -> {
-            createBarrol2();
-        }, Duration.seconds(0.2));
+        getGameTimer().runOnceAfter(this::createBarrol2, Duration.seconds(0.2));
     }
 
     protected void initialiseGame2() {
