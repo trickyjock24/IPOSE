@@ -29,20 +29,19 @@ public class Player extends Component  {
     }
 
     public void playerToRight(int End, int Bottom){
-        if(this.playerKant != "Voorkant"){
-            changeView(this.vincent1VoorkantImage, "Voorkant");
-        }
         if (this.player.getX() < End && this.player.getY() == Bottom) {
+            if(this.playerKant != "Voorkant"){
+                changeView(this.vincent1VoorkantImage, "Voorkant");
+            }
             this.player.translateX(5);
         }
     }
 
     public void playerToLeft(int End, int Bottom){
-        if(this.playerKant != "VoorkantFlip"){
-            changeView(this.vincent1VoorkantFlipImage, "VoorkantFlip");
-        }
-
         if(this.player.getX() > End && this.player.getY() == Bottom){
+            if(this.playerKant != "VoorkantFlip"){
+                changeView(this.vincent1VoorkantFlipImage, "VoorkantFlip");
+            }
             this.player.translateX(-5);
         }
     }

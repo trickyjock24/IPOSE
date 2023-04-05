@@ -3,9 +3,13 @@ Tim - 2
 hi - 2
 tim - 1
 l - 1
-kk - 1
-ll - 1
+kk - 2
+ll - 2
 kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
 
+hoi - 2
+ki - 2
+k - 1
+kkkk - 1

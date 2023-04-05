@@ -2,6 +2,9 @@ package com.example.ipose;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.audio.Audio;
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.FXGLForKtKt;
 import com.almasb.fxgl.entity.Entity;
@@ -19,6 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.play;
+
 
 public class Main extends GameApplication {
     private Player player1 = new Player();
@@ -33,7 +38,6 @@ public class Main extends GameApplication {
     private TimerAction timerAction2;
     private String userName;
     private int level;
-    private boolean levelScreen = false;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -43,6 +47,7 @@ public class Main extends GameApplication {
         settings.setTitle("Donkey Kong");
         settings.setVersion("0.1");
         settings.setDeveloperMenuEnabled(true);
+
     }
 
     private void gameEnd(boolean reachedEndOfGame) {
@@ -50,7 +55,7 @@ public class Main extends GameApplication {
         if (reachedEndOfGame) {
             builder.append("You have reached the end of the game!\n\n");
             FileManager FM = new FileManager();
-            FM.setMaxLevel(this.userName, this.level+1);
+            FM.setMaxLevel(this.userName, this.level + 1);
         }else{
             builder.append("Game Over!\n\n");
         }
@@ -58,7 +63,6 @@ public class Main extends GameApplication {
                 .append(FXGL.geti("score"))
                 .append("\nFinal level: ")
                 .append(this.level);
-
 
         FXGL.getDialogService().showMessageBox(builder.toString(), this::LevelScreen);
     }
@@ -142,7 +146,6 @@ public class Main extends GameApplication {
         for(Ground ground: this.grounds) {
             if(ground.isActive()) {
                 if(player1.getPlayer().getY() <= ground.getGroundBottom()){
-                    player1.changeView(player1.getVincent1VoorkantImage(), "Voorkant");
                 }else{
                     if(this.playerLadderTouch){
                         this.player1.playerClimbLadderDown();
@@ -180,12 +183,24 @@ public class Main extends GameApplication {
             protected void onCollision(Entity player, Entity powerUp) {
                 player1.setPlayerPowerup(true);
                 powerUp.removeFromWorld();
+
+                FXGL.getAudioPlayer().pauseAllMusic();
+                FXGL.getAudioPlayer().stopAllSounds();
+                Sound gameSound = FXGL.getAssetLoader().loadSound("smb_powerup.wav");
+                FXGL.getAudioPlayer().playSound(gameSound);
+
+                getGameTimer().runOnceAfter(() -> {
+                    FXGL.getAudioPlayer().resumeAllMusic();
+                }, Duration.seconds(1));
             }
         });
-
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.PRINCES) {
             @Override
             protected void onCollision(Entity player, Entity princes) {
+                FXGL.getAudioPlayer().stopAllMusic();
+                FXGL.getAudioPlayer().stopAllSounds();
+                Sound gameSound = FXGL.getAssetLoader().loadSound("smb_stage_clear.wav");
+                FXGL.getAudioPlayer().playSound(gameSound);
                 gameEnd(true);
             }
         });
@@ -194,12 +209,21 @@ public class Main extends GameApplication {
             protected void onCollisionBegin(Entity player, Entity barrol) {
                 if(player1.isPlayerPowerup()){
                     player1.setPlayerPowerup(false);
+                    FXGL.getAudioPlayer().pauseAllMusic();
+                    FXGL.getAudioPlayer().stopAllSounds();
+                    Sound gameSound = FXGL.getAssetLoader().loadSound("smb3_sound_effects_bump.wav");
+                    FXGL.getAudioPlayer().playSound(gameSound);
+                    getGameTimer().runOnceAfter(() -> {
+                        FXGL.getAudioPlayer().resumeAllMusic();
+                    }, Duration.seconds(0.5));
                 }else{
+                    FXGL.getAudioPlayer().stopAllMusic();
+                    FXGL.getAudioPlayer().stopAllSounds();
+                    Sound gameSound = FXGL.getAssetLoader().loadSound("smb_mariodie.wav");
+                    FXGL.getAudioPlayer().playSound(gameSound);
                     gameEnd(false);
                 }
             }
-
-
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.LADDER) {
             @Override
@@ -215,11 +239,16 @@ public class Main extends GameApplication {
     }
 
     protected void initGameUI(){
+        Music gameMusic = FXGL.getAssetLoader().loadMusic("Super Mario Bros. Theme Song [TubeRipper.com].mp3");
+        FXGL.getAudioPlayer().loopMusic(gameMusic);
+
         Label userLabel = new Label("User: " + this.userName);
         userLabel.setTranslateX(50);
         userLabel.setTranslateY(15);
         userLabel.setStyle("-fx-text-fill: gray");
         FXGL.getGameScene().addUINode(userLabel);
+
+        System.out.println(this.level);
 
         Label levelLabel = new Label("Level: " + this.level);
         levelLabel.setTranslateX(50);
@@ -306,9 +335,12 @@ public class Main extends GameApplication {
     }
 
     protected void initialiseExit() {
+        FXGL.getAudioPlayer().stopAllMusic();
+        FXGL.getAudioPlayer().stopAllSounds();
         FXGL.set("score", 0);
         FXGL.getGameScene().clearGameViews();
         FXGL.getPhysicsWorld().clear();
+        FXGL.getGameScene().clearUINodes();
         this.barrels = new ArrayList<>();
         if(this.player1.getPlayer() != null){
             this.player1.getPlayer().setX(-100);
@@ -326,7 +358,6 @@ public class Main extends GameApplication {
         if(this.timerAction != null){
             this.timerAction.expire();
             this.timerAction = null;
-            System.out.println("ll");
         }
 
         if(this.timerAction2 != null){
@@ -341,7 +372,7 @@ public class Main extends GameApplication {
         username.setStyle("-fx-text-fill: gray");
         username.setTranslateX(300);
         username.setTranslateY(250);
-        username.setFont(new Font(70)); // set font size to 30
+        username.setFont(new Font(70));
 
         TextField TF = new TextField();
         TF.setStyle("-fx-text-fill: gray");
@@ -358,8 +389,6 @@ public class Main extends GameApplication {
 
         button.setOnAction(actionEvent -> {
             this.userName = TF.getText();
-            System.out.println("Usesrname is: " + this.userName);
-
             TF.setVisible(false);
             button.setVisible(false);
             username.setVisible(false);
