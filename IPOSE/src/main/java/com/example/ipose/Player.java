@@ -77,6 +77,8 @@ public class Player extends Component  {
     }
 
 
+
+
     public void changeView(String image, String kant){
         this.playerKant = kant;
         this.player.getViewComponent().clearChildren();

@@ -5,12 +5,22 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 
 public class Main extends GameApplication {
@@ -22,10 +32,14 @@ public class Main extends GameApplication {
     private ArrayList<PowerUp> powerUps = new ArrayList<>();
     private ArrayList<Ladder> ladders = new ArrayList<>();
 
+    private String userName;
+
+    private int level;
+
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setMainMenuEnabled(true);
+        //settings.setMainMenuEnabled(true);
         settings.setWidth(800);
         settings.setHeight(800);
         settings.setTitle("Donkey Kong");
@@ -37,7 +51,10 @@ public class Main extends GameApplication {
         builder.append("Game Over!\n\n");
         if (reachedEndOfGame) {
             builder.append("You have reached the end of the game!\n\n");
+            FileManager FM = new FileManager();
+            FM.setMaxLevel(this.userName, this.level+1);
         }
+
         builder.append("Final score: ")
                 .append(FXGL.geti("score"))
                 .append("\nFinal level: ")
@@ -47,6 +64,35 @@ public class Main extends GameApplication {
 
     @Override
     protected void initGame(){
+
+    }
+
+    protected void initialiseGame() {
+        Label levelLabel = new Label("Level: " + this.level);
+        Label userLabel = new Label("User: " + this.userName);
+
+        userLabel.setTranslateX(50);
+        userLabel.setTranslateY(70);
+        userLabel.setStyle("-fx-text-fill: white");
+
+        levelLabel.setTranslateX(50);
+        levelLabel.setTranslateY(20);
+        levelLabel.setStyle("-fx-text-fill: white");
+        FXGL.getGameScene().addUINode(levelLabel);
+        FXGL.getGameScene().addUINode(userLabel);
+
+        Label scoreLabel = new Label("Score: ");
+        Label scoreNumber = new Label("0");
+        scoreLabel.setTranslateX(50);
+        scoreLabel.setTranslateY(50);
+        scoreLabel.setStyle("-fx-text-fill: white");
+        scoreNumber.setTranslateX(100);
+        scoreNumber.setTranslateY(50);
+        scoreNumber.setStyle("-fx-text-fill: white");
+        scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
+        FXGL.getGameScene().addUINode(scoreLabel);
+        FXGL.getGameScene().addUINode(scoreNumber);
+
         Ground ground1 = new Ground(-145, 540, 472, true);
         ground1.setNewGround(50, 750, 700, 20);
         this.grounds.add(ground1);
@@ -109,6 +155,7 @@ public class Main extends GameApplication {
 
         this.player1.setNewPlayer(-100, 472);
     }
+
 
     @Override
     protected void initInput() {
@@ -259,32 +306,112 @@ public class Main extends GameApplication {
 
     @Override
     protected void initUI() {
-        Label levelLabel = new Label("Level: ");
-        Label levelNumber = new Label("0");
-        levelLabel.setTranslateX(50);
-        levelLabel.setTranslateY(20);
-        levelLabel.setStyle("-fx-text-fill: gray");
-        levelNumber.setTranslateX(100);
-        levelNumber.setTranslateY(20);
-        levelNumber.setStyle("-fx-text-fill: gray");
-        levelNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
-        FXGL.getGameScene().addUINode(levelLabel);
-        FXGL.getGameScene().addUINode(levelNumber);
+        Label username = new Label("LOGIN:");
+        username.setStyle("-fx-text-fill: gray");
+        username.setTranslateX(300);
+        username.setTranslateY(250);
+        username.setFont(new Font(70)); // set font size to 30
 
-        Label scoreLabel = new Label("Score: ");
-        Label scoreNumber = new Label("0");
-        scoreLabel.setTranslateX(50);
-        scoreLabel.setTranslateY(50);
-        scoreLabel.setStyle("-fx-text-fill: gray");
-        scoreNumber.setTranslateX(100);
-        scoreNumber.setTranslateY(50);
-        scoreNumber.setStyle("-fx-text-fill: gray");
-        scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
-        FXGL.getGameScene().addUINode(scoreLabel);
-        FXGL.getGameScene().addUINode(scoreNumber);
+        TextField TF = new TextField();
+        TF.setStyle("-fx-text-fill: gray");
+        TF.setTranslateX(250);
+        TF.setTranslateY(450);
+        TF.setPrefWidth(350);
+        TF.setPrefHeight(20);
 
+        Button button = new Button("LOGIN");
+        button.setStyle("-fx-text-fill: gray");
+        button.setTranslateX(300);
+        button.setTranslateY(520);
+        button.setPrefSize(200, 20);
+
+
+
+        button.setOnAction(actionEvent -> {
+            this.userName = TF.getText();
+            System.out.println("Usesrname is: " + this.userName);
+
+            TF.setVisible(false);
+            button.setVisible(false);
+            username.setVisible(false);
+
+            FileManager FM = new FileManager();
+            int maxLevel = FM.getMaxLevel(this.userName);
+
+
+            Button b1 = new Button("LEVEL 1");
+            b1.setStyle("-fx-text-fill: gray");
+            b1.setTranslateX(160);
+            b1.setTranslateY(230);
+            b1.setPrefSize(450, 100);
+
+
+            Button b2 = new Button("LEVEL 2");
+            b2.setStyle("-fx-text-fill: gray");
+            b2.setTranslateX(160);
+            b2.setTranslateY(350);
+            b2.setPrefSize(450, 100);
+
+
+            Button b3 = new Button("LEVEL 3");
+            b3.setStyle("-fx-text-fill: gray");
+            b3.setTranslateX(160);
+            b3.setTranslateY(480);
+            b3.setPrefSize(450, 100);
+
+
+            FXGL.getGameScene().addUINode(b1);
+            FXGL.getGameScene().addUINode(b3);
+            FXGL.getGameScene().addUINode(b2);
+
+            b1.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 1;
+                this.initialiseGame();
+            });
+
+            b2.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 2;
+                this.initialiseGame();
+            });
+
+            b3.setOnAction(actionEvent1 -> {
+                b1.setVisible(false);
+                b2.setVisible(false);
+                b3.setVisible(false);
+
+                this.level = 3;
+                this.initialiseGame();
+            });
+
+
+            if (maxLevel == 1) {
+                b3.setVisible(false);
+                b2.setVisible(false);
+            }
+
+            if (maxLevel == 2) {
+                b3.setVisible(false);
+            }
+
+        });
+
+
+        FXGL.getGameScene().addUINode(username);
+        FXGL.getGameScene().addUINode(button);
+        FXGL.getGameScene().addUINode(TF);
+
+
+
+//
         FXGL.getGameScene().setBackgroundColor(Color.BLACK);
-        // nothing to do here
     }
 
     @Override

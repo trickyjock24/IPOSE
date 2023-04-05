@@ -11,6 +11,7 @@ public class PowerUp {
 
 
     public void setNewPowerUp(int x, int y){
+
         this.powerup = FXGL.entityBuilder()
                 .at(x, y)
                 .viewWithBBox(new Circle(5, Color.GREEN))
