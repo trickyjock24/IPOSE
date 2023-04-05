@@ -39,7 +39,7 @@ public class Main extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
-        //settings.setMainMenuEnabled(true);
+        settings.setMainMenuEnabled(true);
         settings.setWidth(800);
         settings.setHeight(800);
         settings.setTitle("Donkey Kong");
