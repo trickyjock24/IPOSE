@@ -8,9 +8,15 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import static com.almasb.fxgl.dsl.FXGL.run;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
+
 
 
 public class Main extends GameApplication {
@@ -19,8 +25,9 @@ public class Main extends GameApplication {
     private DonkeyKong donkeyKong1 = new DonkeyKong();
     private boolean playerLadderTouch = false;
     private ArrayList<Ground> grounds = new ArrayList<>();
-    private ArrayList<PowerUp> powerUps = new ArrayList<>();
     private ArrayList<Ladder> ladders = new ArrayList<>();
+    private ArrayList<PowerUp> powerUps = new ArrayList<>();
+    private ArrayList<Barrel> barrels = new ArrayList<>();
 
 
     @Override
@@ -34,9 +41,10 @@ public class Main extends GameApplication {
 
     private void gameEnd(boolean reachedEndOfGame) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Game Over!\n\n");
         if (reachedEndOfGame) {
             builder.append("You have reached the end of the game!\n\n");
+        }else{
+            builder.append("Game Over!\n\n");
         }
         builder.append("Final score: ")
                 .append(FXGL.geti("score"))
@@ -95,7 +103,6 @@ public class Main extends GameApplication {
         ladder6.setNewLadder(400, 128);
         this.ladders.add(ladder6);
 
-
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(150, 280);
         this.powerUps.add(powerUp1);
@@ -108,10 +115,38 @@ public class Main extends GameApplication {
         this.donkeyKong1.setNewDonkeyKong(-150, -248);
 
         this.player1.setNewPlayer(-100, 472);
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2();
+        }, Duration.seconds(0.2));
     }
+
+    private void createBarrol2(){
+        double randomNum = ThreadLocalRandom.current().nextDouble(0.2, 1.5);
+        run(() -> createBarrol(), Duration.seconds(1));
+    }
+
+    private void createBarrol(){
+        FXGL.inc("score", +50);
+        Barrel barrel1 = new Barrel();
+        barrel1.setNewBarrel(100, 220);
+        this.barrels.add(barrel1);
+        Barrel curentBarrol = null;
+        for(int i = 0; i < this.barrels.size(); i++){
+            curentBarrol = this.barrels.get(i);
+        }
+        Barrel finalCurentBarrol = curentBarrol;
+        run(() -> finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() +215), Duration.seconds(0.001));
+    }
+
 
     @Override
     protected void initInput() {
+        FXGL.onKey(KeyCode.Q, ()->{
+            for(int i = 0; i < this.barrels.size(); i++){
+                this.barrels.get(i).barrelRoll(this.player1.getPlayer().getX() +215);
+            }
+        });
+
         FXGL.onKey(KeyCode.D, ()->{
             for (Ground ground: this.grounds) {
                 if (ground.isActive()) {
@@ -153,41 +188,61 @@ public class Main extends GameApplication {
         });
 
         FXGL.onKey(KeyCode.W, ()->{
+            Ground activeNextGround = null;
+            int activeNumber = 0;
             for(int i = 0; i < this.grounds.size(); i++){
                 if(grounds.get(i).isActive() && this.grounds.size() > i + 1){
-                    if(player1.getPlayer().getY() == grounds.get(i + 1).getGroundBottom()){
-                        for(Ground ground: this.grounds) {
-                            ground.setActive(false);
-                        }
-                        playerLadderTouch = false;
-                        if(this.grounds.size() > i + 1){
-                            grounds.get(i + 1).setActive(true);
-                        }
-                    }else{
-                        if(this.playerLadderTouch){
-                            this.player1.playerClimbLadderUp();
-                        }
-                    }
+                    activeNextGround = grounds.get(i + 1);
+                    activeNumber = i;
+                }
+            }
+
+            if(player1.getPlayer().getY() == activeNextGround.getGroundBottom()){
+                for(Ground ground: this.grounds) {
+                    ground.setActive(false);
+                }
+                playerLadderTouch = false;
+                System.out.println(this.grounds.size() > activeNumber + 1);
+                System.out.println(this.grounds.size());
+                System.out.println(activeNumber + 1);
+                if(this.grounds.size() > activeNumber + 1){
+                    activeNextGround.setActive(true);
+                    player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
+                    System.out.println("lllll");
+                }
+            }else{
+                if(this.playerLadderTouch){
+                    this.player1.playerClimbLadderUp();
                 }
             }
         });
 
         FXGL.onKey(KeyCode.UP, ()->{
+            Ground activeNextGround = null;
+            int activeNumber = 0;
             for(int i = 0; i < this.grounds.size(); i++){
                 if(grounds.get(i).isActive() && this.grounds.size() > i + 1){
-                    if(player1.getPlayer().getY() == grounds.get(i + 1).getGroundBottom()){
-                        for(Ground ground: this.grounds) {
-                            ground.setActive(false);
-                        }
-                        playerLadderTouch = false;
-                        if(this.grounds.size() > i + 1){
-                            grounds.get(i + 1).setActive(true);
-                        }
-                    }else{
-                        if(this.playerLadderTouch){
-                            this.player1.playerClimbLadderUp();
-                        }
-                    }
+                    activeNextGround = grounds.get(i + 1);
+                    activeNumber = i;
+                }
+            }
+
+            if(player1.getPlayer().getY() == activeNextGround.getGroundBottom()){
+                for(Ground ground: this.grounds) {
+                    ground.setActive(false);
+                }
+                playerLadderTouch = false;
+                System.out.println(this.grounds.size() > activeNumber + 1);
+                System.out.println(this.grounds.size());
+                System.out.println(activeNumber + 1);
+                if(this.grounds.size() > activeNumber + 1){
+                    activeNextGround.setActive(true);
+                    player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
+                    System.out.println("lllll");
+                }
+            }else{
+                if(this.playerLadderTouch){
+                    this.player1.playerClimbLadderUp();
                 }
             }
         });
@@ -196,7 +251,7 @@ public class Main extends GameApplication {
             for(Ground ground: this.grounds) {
                 if(ground.isActive()) {
                     if(player1.getPlayer().getY() <= ground.getGroundBottom()){
-
+                        player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
                     }else{
                         if(this.playerLadderTouch){
                             this.player1.playerClimbLadderDown();
@@ -210,7 +265,7 @@ public class Main extends GameApplication {
             for(Ground ground: this.grounds) {
                 if(ground.isActive()) {
                     if(player1.getPlayer().getY() >= ground.getGroundBottom()){
-
+                        player1.changeView(player1.getVincent1VoorkantImage(), "Achterkant");
                     }else{
                         if(this.playerLadderTouch){
                             this.player1.playerClimbLadderDown();
@@ -238,19 +293,29 @@ public class Main extends GameApplication {
             }
         });
 
+            FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.BARREL) {
+                @Override
+                protected void onCollisionEnd(Entity player, Entity barrol) {
+                    if(player1.isPlayerPowerup()){
+                        player1.setPlayerPowerup(false);
+                    }else{
+                        gameEnd(false);
+                    }
+                }
+            });
+
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.LADDER) {
             @Override
             protected void onCollisionBegin(Entity player, Entity ladder) {
-                System.out.println(player);
-                System.out.println(ladder);
-
+//                System.out.println(player);
+//                System.out.println(ladder);
                 playerLadderTouch = true;
             }
 
             @Override
             protected void onCollisionEnd(Entity player, Entity ladder) {
-                System.out.println(player);
-                System.out.println(ladder);
+//                System.out.println(player);
+//                System.out.println(ladder);
                 playerLadderTouch = false;
             }
         });
@@ -260,7 +325,7 @@ public class Main extends GameApplication {
     @Override
     protected void initUI() {
         Label levelLabel = new Label("Level: ");
-        Label levelNumber = new Label("0");
+        Label levelNumber = new Label("1");
         levelLabel.setTranslateX(50);
         levelLabel.setTranslateY(20);
         levelLabel.setStyle("-fx-text-fill: gray");
@@ -274,22 +339,21 @@ public class Main extends GameApplication {
         Label scoreLabel = new Label("Score: ");
         Label scoreNumber = new Label("0");
         scoreLabel.setTranslateX(50);
-        scoreLabel.setTranslateY(50);
+        scoreLabel.setTranslateY(40);
         scoreLabel.setStyle("-fx-text-fill: gray");
         scoreNumber.setTranslateX(100);
-        scoreNumber.setTranslateY(50);
+        scoreNumber.setTranslateY(40);
         scoreNumber.setStyle("-fx-text-fill: gray");
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreLabel);
         FXGL.getGameScene().addUINode(scoreNumber);
 
         FXGL.getGameScene().setBackgroundColor(Color.BLACK);
-        // nothing to do here
     }
 
     @Override
     protected void initGameVars(Map<String, Object> vars){
-        vars.put("level", 0);
+        vars.put("level", 1);
         vars.put("score", 0);
     }
 

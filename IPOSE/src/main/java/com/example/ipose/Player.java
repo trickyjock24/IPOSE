@@ -38,7 +38,7 @@ public class Player extends Component  {
         }
         if (this.player.getX() < End && this.player.getY() == Bottom) {
             this.player.translateX(5);
-            System.out.println(this.player.getX());
+//            System.out.println(this.player.getX());
         }
     }
 
@@ -49,7 +49,7 @@ public class Player extends Component  {
 
         if(this.player.getX() > End && this.player.getY() == Bottom){
             this.player.translateX(-5);
-            System.out.println(this.player.getX());
+//            System.out.println(this.player.getX());
         }
     }
 
@@ -105,8 +105,22 @@ public class Player extends Component  {
         return playerPowerup;
     }
 
+    public String getVincent1VoorkantImage() {
+        return vincent1VoorkantImage;
+    }
+
+    public void setVincent1VoorkantImage(String vincent1VoorkantImage) {
+        this.vincent1VoorkantImage = vincent1VoorkantImage;
+    }
+
     public void setPlayerPowerup(boolean playerPowerup) {
         this.playerPowerup = playerPowerup;
-        this.player.getViewComponent().setOpacity(0.5);
+        if(playerPowerup){
+            this.player.getViewComponent().setOpacity(0.5);
+        }else{
+            this.player.getViewComponent().setOpacity(1);
+        }
     }
+
+
 }
