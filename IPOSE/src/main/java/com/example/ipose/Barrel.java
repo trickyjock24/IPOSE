@@ -13,10 +13,10 @@ public class Barrel {
     public void setNewBarrel(int x, int y){
         this.barrel = FXGL.entityBuilder()
                 .at(x, y)
-                .viewWithBBox(new Circle(10, Color.BROWN))
+                .viewWithBBox("barrol-removebg-preview.png")
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.BARREL)
-                .scale(2, 2)
+                .scale(0.1, 0.1)
                 .buildAndAttach();
     }
 
@@ -26,6 +26,7 @@ public class Barrel {
         }else{
             if(this.barrel.getX() < playerX){
                 this.barrel.translateX(5);
+                this.barrel.rotateBy(5);
             }else{
                 this.barrelOnPlayer = true;
             }

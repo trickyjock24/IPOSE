@@ -77,7 +77,7 @@ public class Main extends GameApplication {
     private void createBarrol(){
         FXGL.inc("score", +50);
         Barrel barrel1 = new Barrel();
-        barrel1.setNewBarrel(100, 220);
+        barrel1.setNewBarrel(-120, -18);
         this.barrels.add(barrel1);
         Barrel curentBarrol = null;
         for (int i = 0; i < this.barrels.size(); i++) {
@@ -85,7 +85,7 @@ public class Main extends GameApplication {
         }
         Barrel finalCurentBarrol = curentBarrol;
         this.timerAction2 = getGameTimer().runAtInterval(() -> {
-            finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() + 215);
+            finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() -30);
         }, Duration.seconds(0.001));
     }
 
@@ -233,27 +233,27 @@ public class Main extends GameApplication {
     }
 
     protected void initGameUI(){
-        Label levelLabel = new Label("Level: " + this.level);
-        levelLabel.setTranslateX(50);
-        levelLabel.setTranslateY(20);
-        levelLabel.setStyle("-fx-text-fill: gray");
-        FXGL.getGameScene().addUINode(levelLabel);
-
         Label userLabel = new Label("User: " + this.userName);
         userLabel.setTranslateX(50);
-        userLabel.setTranslateY(70);
+        userLabel.setTranslateY(15);
         userLabel.setStyle("-fx-text-fill: gray");
         FXGL.getGameScene().addUINode(userLabel);
 
+        Label levelLabel = new Label("Level: " + this.level);
+        levelLabel.setTranslateX(50);
+        levelLabel.setTranslateY(30);
+        levelLabel.setStyle("-fx-text-fill: gray");
+        FXGL.getGameScene().addUINode(levelLabel);
+
         Label scoreLabel = new Label("Score: ");
         scoreLabel.setTranslateX(50);
-        scoreLabel.setTranslateY(40);
+        scoreLabel.setTranslateY(45);
         scoreLabel.setStyle("-fx-text-fill: gray");
         FXGL.getGameScene().addUINode(scoreLabel);
 
         Label scoreNumber = new Label("0");
         scoreNumber.setTranslateX(85);
-        scoreNumber.setTranslateY(40);
+        scoreNumber.setTranslateY(45);
         scoreNumber.setStyle("-fx-text-fill: gray");
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreNumber);
