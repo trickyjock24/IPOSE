@@ -9,7 +9,6 @@ import javafx.scene.shape.Circle;
 public class PowerUp {
     private Entity powerup;
 
-
     public void setNewPowerUp(int x, int y){
         this.powerup = FXGL.entityBuilder()
                 .at(x, y)

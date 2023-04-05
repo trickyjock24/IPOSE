@@ -30,14 +30,6 @@ public class Ground {
                 .buildAndAttach();
     }
 
-    public Entity getGround() {
-        return ground;
-    }
-
-    public void setGround(Entity ground) {
-        this.ground = ground;
-    }
-
     public int getGroundEndLeft() {
         return groundEndLeft;
     }

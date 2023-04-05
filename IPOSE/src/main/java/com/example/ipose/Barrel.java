@@ -5,9 +5,6 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
 
 public class Barrel {
     private Entity barrel;

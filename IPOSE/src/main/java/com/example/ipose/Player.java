@@ -5,10 +5,6 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameTimer;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
@@ -38,7 +34,6 @@ public class Player extends Component  {
         }
         if (this.player.getX() < End && this.player.getY() == Bottom) {
             this.player.translateX(5);
-//            System.out.println(this.player.getX());
         }
     }
 
@@ -49,7 +44,6 @@ public class Player extends Component  {
 
         if(this.player.getX() > End && this.player.getY() == Bottom){
             this.player.translateX(-5);
-//            System.out.println(this.player.getX());
         }
     }
 
@@ -76,29 +70,14 @@ public class Player extends Component  {
         this.player.translateY(5);
     }
 
-
     public void changeView(String image, String kant){
         this.playerKant = kant;
         this.player.getViewComponent().clearChildren();
         this.player.getViewComponent().addChild(texture(image));
     }
 
-
-
     public Entity getPlayer() {
         return player;
-    }
-
-    public void setPlayer(Entity player) {
-        this.player = player;
-    }
-
-    public String getPlayerKant() {
-        return playerKant;
-    }
-
-    public void setPlayerKant(String playerKant) {
-        this.playerKant = playerKant;
     }
 
     public boolean isPlayerPowerup() {
@@ -109,9 +88,6 @@ public class Player extends Component  {
         return vincent1VoorkantImage;
     }
 
-    public void setVincent1VoorkantImage(String vincent1VoorkantImage) {
-        this.vincent1VoorkantImage = vincent1VoorkantImage;
-    }
 
     public void setPlayerPowerup(boolean playerPowerup) {
         this.playerPowerup = playerPowerup;
