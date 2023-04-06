@@ -114,9 +114,28 @@ public class FileManager {
         ArrayList<Score> sortedScores = (ArrayList<Score>) scores.stream()
                 .sorted(Comparator.comparingInt(Score::getScore).reversed())
                 .collect(Collectors.toList());
-        highScores[0] = sortedScores.get(0);
-        highScores[1] = sortedScores.get(1);
-        highScores[2] = sortedScores.get(2);
+
+        if (sortedScores.size() > 0) {
+            highScores[0] = sortedScores.get(0);
+        }
+        else {
+            highScores[0] = null;
+        }
+
+        if (sortedScores.size() > 1) {
+            highScores[1] = sortedScores.get(1);
+        }
+        else {
+            highScores[1] = null;
+        }
+
+        if (sortedScores.size() > 2) {
+            highScores[2] = sortedScores.get(2);
+        }
+        else {
+            highScores[2] = null;
+        }
+
         return highScores;
     }
 }

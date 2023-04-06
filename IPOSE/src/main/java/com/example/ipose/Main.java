@@ -75,15 +75,25 @@ public class Main extends GameApplication {
                 builder.append("YOU BROKE THE HIGH SCORE!\n\n");
             }
             int index = 1;
+
             for (Score i : highestScore) {
-                builder.append(index+". ")
-                        .append(i.getUsername())
-                        .append(": ")
-                        .append(i.getScore() + "pt")
-                        .append("\n\n");
-                index++;
+                if (i != null) {
+                    builder.append(index)
+                            .append(". ")
+                            .append(i.getUsername())
+                            .append(": ").append(i.getScore())
+                            .append("pt")
+                            .append("\n\n");
+                    index++;
+                }
+                else {
+                    break;
+                }
+
             }
-        }else{
+        }
+
+        else{
             builder.append("Game Over!\n\n");
         }
         builder.append("Final score: ").append(FXGL.geti("score"));
