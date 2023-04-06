@@ -449,9 +449,9 @@ public class Main extends GameApplication {
         this.princes1.setNewPrinces(220, -250, "");
         this.donkeyKong1.setNewDonkeyKong(-150, -248);
         this.player1.setNewPlayer(-100, 472);
-//        getGameTimer().runOnceAfter(() -> {
-//            createBarrol2(0.65);
-//        }, Duration.seconds(0.0005));
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2(0.65);
+        }, Duration.seconds(0.0005));
     }
 
     protected void initialiseExit() {
