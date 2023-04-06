@@ -50,10 +50,10 @@ public class Player extends Component  {
 
     public void playerJump(int Bottom){
         if(this.player.getY() == Bottom){
-            this.player.translateY(-60);
+            this.player.translateY(-45);
             getGameTimer().runOnceAfter(() -> {
-                this.player.translateY(60);
-            }, Duration.seconds(0.55));
+                this.player.translateY(45);
+            }, Duration.seconds(0.40));
         }
     }
 

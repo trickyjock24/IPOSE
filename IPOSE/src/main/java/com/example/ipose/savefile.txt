@@ -1,8 +1,8 @@
 Tim - 2
 <<<<<<< HEAD
- - 3
+ - 2
 =======
- - 4
+ - 2
 >>>>>>> c191165d89ccd091f0f5d8405f9b30fdd13513fa
 hi - 2
 tim - 1
@@ -13,9 +13,9 @@ kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
 <<<<<<< HEAD
- - 3
+ - 2
 =======
- - 4
+ - 2
 >>>>>>> c191165d89ccd091f0f5d8405f9b30fdd13513fa
 hoi - 2
 ki - 2

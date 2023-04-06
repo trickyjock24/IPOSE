@@ -62,20 +62,32 @@ public class Main extends GameApplication {
     private void gameEnd(boolean reachedEndOfGame) {
         StringBuilder builder = new StringBuilder();
         if (reachedEndOfGame) {
-            builder.append("You have reached the end of the game!\n\n");
             FileManager FM = new FileManager();
             FM.setMaxLevel(this.userName, this.level + 1);
+            int score = FXGL.geti("score");
+            FM.setNewScore(this.userName, this.level, String.valueOf(score));
+            Score[] highestScore = FM.getHighScores(this.level);
+            builder.append("You have reached the end of the game!\n\nHighest score was: ")
+                    .append(highestScore[0].getScore())
+                    .append("\n\n");
+            if (score == highestScore[0].getScore()) {
+                builder.append("YOU BROKE THE HIGH SCORE!\n\n");
+            }
+            int index = 1;
+            for (Score i : highestScore) {
+                builder.append(index+". ")
+                        .append(i.getUsername())
+                        .append(": ")
+                        .append(i.getScore() + "pt")
+                        .append("\n\n");
+                index++;
+            }
         }else{
             builder.append("Game Over!\n\n");
         }
-        builder.append("Final score: ")
-                .append(FXGL.geti("score"))
-                .append("\nFinal level: ")
-                .append(this.level);
-
+        builder.append("Final score: ").append(FXGL.geti("score"));
         FXGL.getDialogService().showMessageBox(builder.toString(), this::LevelScreen);
     }
-
 
     @Override
     protected void initGame(){
