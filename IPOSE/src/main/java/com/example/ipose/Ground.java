@@ -13,7 +13,8 @@ public class Ground {
     private int groundEndRight;
     private boolean active;
 
-    private String grounImage = "ground-removebg-preview.png";
+    private String treeTrunkImage = "ground-removebg-preview.png";
+    private Entity treeTrunk;
 
     public Ground(int groundEndLeft, int groundEndRight, int groundBottom, boolean active) {
         this.groundEndLeft = groundEndLeft;
@@ -30,6 +31,24 @@ public class Ground {
                 .type(EntityTypes.GROUND)
                 .scale(1, 1)
                 .buildAndAttach();
+         this.treeTrunk = FXGL.entityBuilder()
+                 .at(x-13, y-5)
+                 .view(treeTrunkImage)
+                 .scale(0.2, 0.2)
+                 .buildAndAttach();
+
+        this.treeTrunk.setScaleY(0.2);
+        if(this.ground.getWidth() == 700){
+            this.treeTrunk.setScaleX(0.542);
+        }else if(this.ground.getWidth() == 600){
+            this.treeTrunk.setScaleX(0.46);
+        }else if(this.ground.getWidth() == 500){
+            this.treeTrunk.setScaleX(0.39);
+        }else if(this.ground.getWidth() == 500){
+            this.treeTrunk.setScaleX(0.4);
+        }else if(this.ground.getWidth() == 250){
+            this.treeTrunk.setScaleX(0.198);
+        }
     }
 
     public int getGroundEndLeft() {

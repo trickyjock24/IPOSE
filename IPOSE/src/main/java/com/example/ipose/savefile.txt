@@ -13,3 +13,6 @@ hoi - 2
 ki - 2
 k - 1
 kkkk - 1
+HOI - 2
+lll - 1
+llll - 1
