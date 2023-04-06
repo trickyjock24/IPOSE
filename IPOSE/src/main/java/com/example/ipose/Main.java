@@ -47,6 +47,7 @@ public class Main extends GameApplication {
     private int level;
 
     private boolean playerEnd = false;
+    private boolean playerSecontToEnd = false;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -110,7 +111,7 @@ public class Main extends GameApplication {
             }
             Barrel finalCurentBarrol = curentBarrol;
             this.timerAction2 = getGameTimer().runAtInterval(() -> {
-                finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() -30);
+                finalCurentBarrol.barrelRoll(this.player1.getPlayer().getX() -30, this.playerSecontToEnd);
             }, Duration.seconds(0.001));
         }
     }
@@ -148,6 +149,7 @@ public class Main extends GameApplication {
                 activeNumber = i;
             }
         }
+
         if(activeNextGround != null){
             if(player1.getPlayer().getY() == activeNextGround.getGroundBottom()){
                 for(Ground ground: this.grounds) {
@@ -157,6 +159,10 @@ public class Main extends GameApplication {
                 if(this.grounds.size() > activeNumber + 1){
                     activeNextGround.setActive(true);
                     player1.changeView(player1.getVincent1VoorkantImage(), "Voorkant");
+                    System.out.println(activeNumber);
+                    if(activeNumber == 3){
+                        this.playerSecontToEnd = true;
+                    }
                 }
             }else{
                 if(this.playerLadderTouch){

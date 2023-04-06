@@ -28,15 +28,25 @@ public class Barrel {
         this.barrel.getBoundingBoxComponent().addHitBox(hitBox);
     }
 
-    public void barrelRoll(double playerX){
-        if(this.barrelOnPlayer){
-            this.barrel.translateY(5);
-        }else{
-            if(this.barrel.getX() < playerX){
+    public void barrelRoll(double playerX, boolean end){
+        if(end){
+            System.out.println(this.barrel.getX());
+            if(this.barrel.getX() > 520){
+                this.barrel.translateY(5);
+            }else{
                 this.barrel.translateX(5);
                 this.barrel.rotateBy(5);
+            }
+        }else{
+            if(this.barrelOnPlayer){
+                this.barrel.translateY(5);
             }else{
-                this.barrelOnPlayer = true;
+                if(this.barrel.getX() < playerX){
+                    this.barrel.translateX(5);
+                    this.barrel.rotateBy(5);
+                }else{
+                    this.barrelOnPlayer = true;
+                }
             }
         }
     }

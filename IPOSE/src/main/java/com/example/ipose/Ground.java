@@ -43,8 +43,6 @@ public class Ground {
         }else if(this.ground.getWidth() == 600){
             this.treeTrunk.setScaleX(0.46);
         }else if(this.ground.getWidth() == 500){
-            this.treeTrunk.setScaleX(0.39);
-        }else if(this.ground.getWidth() == 500){
             this.treeTrunk.setScaleX(0.4);
         }else if(this.ground.getWidth() == 250){
             this.treeTrunk.setScaleX(0.198);
