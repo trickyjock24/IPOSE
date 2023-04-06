@@ -26,3 +26,7 @@ lll - 1
 llll - 1
 hh - 1
 mike - 1
+Ernie - 2
+Gat - 2
+Fat - 2
+Eren - 3
