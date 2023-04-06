@@ -13,6 +13,8 @@ public class Ground {
     private int groundEndRight;
     private boolean active;
 
+    private String grounImage = "ground-removebg-preview.png";
+
     public Ground(int groundEndLeft, int groundEndRight, int groundBottom, boolean active) {
         this.groundEndLeft = groundEndLeft;
         this.groundEndRight = groundEndRight;
@@ -28,14 +30,6 @@ public class Ground {
                 .type(EntityTypes.GROUND)
                 .scale(1, 1)
                 .buildAndAttach();
-    }
-
-    public Entity getGround() {
-        return ground;
-    }
-
-    public void setGround(Entity ground) {
-        this.ground = ground;
     }
 
     public int getGroundEndLeft() {

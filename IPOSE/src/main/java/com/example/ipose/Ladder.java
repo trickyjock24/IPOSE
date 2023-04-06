@@ -25,12 +25,4 @@ public class Ladder {
     public void setLadder(Entity ladder) {
         this.ladder = ladder;
     }
-
-    public String getLadderImage() {
-        return LadderImage;
-    }
-
-    public void setLadderImage(String ladderImage) {
-        LadderImage = ladderImage;
-    }
 }
