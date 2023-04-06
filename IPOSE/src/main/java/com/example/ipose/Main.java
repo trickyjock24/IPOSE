@@ -68,6 +68,7 @@ public class Main extends GameApplication {
 
         FXGL.getDialogService().showMessageBox(builder.toString(), this::LevelScreen);
     }
+    
 
     @Override
     protected void initGame(){
