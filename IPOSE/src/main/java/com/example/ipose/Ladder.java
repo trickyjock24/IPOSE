@@ -7,8 +7,9 @@ import com.almasb.fxgl.entity.components.CollidableComponent;
 public class Ladder {
     private Entity ladder;
     private String LadderImage = "ladder.png";
+    private boolean lastLadder = false;
 
-    public void setNewLadder(int x, int y){
+    public void setNewLadder(int x, int y, boolean last){
         this.ladder = FXGL.entityBuilder()
                 .at(x, y)
                 .viewWithBBox(this.LadderImage)
@@ -16,6 +17,17 @@ public class Ladder {
                 .type(EntityTypes.LADDER)
                 .scale(2, 2)
                 .buildAndAttach();
+        if(last){
+            this.lastLadder = true;
+        }
+    }
+
+    public boolean isLastLadder() {
+        return lastLadder;
+    }
+
+    public void setLastLadder(boolean lastLadder) {
+        this.lastLadder = lastLadder;
     }
 
     public Entity getLadder() {

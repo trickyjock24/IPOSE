@@ -8,7 +8,7 @@ hi - 2
 tim - 1
 l - 2
 kk - 3
-ll - 4
+ll - 2
 kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
@@ -31,3 +31,4 @@ Gat - 2
 Fat - 2
 Eren - 3
 ;; - 4
+o - 2

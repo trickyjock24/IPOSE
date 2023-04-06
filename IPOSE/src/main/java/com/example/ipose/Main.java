@@ -314,8 +314,8 @@ public class Main extends GameApplication {
         FXGL.getGameScene().addUINode(scoreNumber);
     }
 
-    private void setLadderForGameLadders(Ladder ladder, int ladderX, int ladderY) {
-        ladder.setNewLadder(ladderX, ladderY);
+    private void setLadderForGameLadders(Ladder ladder, int ladderX, int ladderY, boolean last) {
+        ladder.setNewLadder(ladderX, ladderY, last);
         this.ladders.add(ladder);
     }
 
@@ -345,11 +345,11 @@ public class Main extends GameApplication {
         ground6.setNewGround(400, 100, 250, 20);
         this.grounds.add(ground6);
 
-        this.setLadderForGameLadders(new Ladder(), 300, 648);
-        this.setLadderForGameLadders(new Ladder(), 650, 518);
-        this.setLadderForGameLadders(new Ladder(), 250, 388);
-        this.setLadderForGameLadders(new Ladder(), 450, 258);
-        this.setLadderForGameLadders(new Ladder(), 600, 128);
+        this.setLadderForGameLadders(new Ladder(), 300, 648, false);
+        this.setLadderForGameLadders(new Ladder(), 650, 518, false);
+        this.setLadderForGameLadders(new Ladder(), 250, 388, false);
+        this.setLadderForGameLadders(new Ladder(), 450, 258, false);
+        this.setLadderForGameLadders(new Ladder(), 600, 128, true);
 
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(320, 240);
@@ -390,12 +390,12 @@ public class Main extends GameApplication {
         ground6.setNewGround(360, 100, 250, 20);
         this.grounds.add(ground6);
 
-        this.setLadderForGameLadders(new Ladder(), 400, 128);
-        this.setLadderForGameLadders(new Ladder(), 500, 648);
-        this.setLadderForGameLadders(new Ladder(), 250, 518);
-        this.setLadderForGameLadders(new Ladder(), 450, 388);
-        this.setLadderForGameLadders(new Ladder(), 200, 258);
-        this.setLadderForGameLadders(new Ladder(), 650, 258);
+        this.setLadderForGameLadders(new Ladder(), 400, 128, true);
+        this.setLadderForGameLadders(new Ladder(), 500, 648, false);
+        this.setLadderForGameLadders(new Ladder(), 250, 518, false);
+        this.setLadderForGameLadders(new Ladder(), 450, 388, false);
+        this.setLadderForGameLadders(new Ladder(), 200, 258, false);
+        this.setLadderForGameLadders(new Ladder(), 650, 258, false);
 
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(-10, 120);
@@ -434,12 +434,12 @@ public class Main extends GameApplication {
         Ground ground6 = new Ground(195, 450, -178, false);
         ground6.setNewGround(400, 100, 250, 20);
         this.grounds.add(ground6);
-        this.setLadderForGameLadders(new Ladder(), 650, 648);
-        this.setLadderForGameLadders(new Ladder(), 250, 518);
-        this.setLadderForGameLadders(new Ladder(), 400, 388);
-        this.setLadderForGameLadders(new Ladder(), 650, 388);
-        this.setLadderForGameLadders(new Ladder(), 500, 258);
-        this.setLadderForGameLadders(new Ladder(), 600, 128);
+        this.setLadderForGameLadders(new Ladder(), 650, 648, false);
+        this.setLadderForGameLadders(new Ladder(), 250, 518, false);
+        this.setLadderForGameLadders(new Ladder(), 400, 388, false);
+        this.setLadderForGameLadders(new Ladder(), 650, 388, false);
+        this.setLadderForGameLadders(new Ladder(), 500, 258, false);
+        this.setLadderForGameLadders(new Ladder(), 600, 128, true);
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(450, 240);
         this.powerUps.add(powerUp1);
