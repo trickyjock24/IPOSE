@@ -469,6 +469,7 @@ public class Main extends GameApplication {
             this.player1.setPlayerPowerup(false);
             this.player1.changeView(this.player1.getVincent1VoorkantImage(), "Voorkant");
         }
+
         this.princes1 = new Princes();
         this.donkeyKong1 = new DonkeyKong();
         this.playerLadderTouch = false;

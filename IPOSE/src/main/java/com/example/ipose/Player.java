@@ -35,7 +35,6 @@ public class Player extends Component  {
             }
             this.player.translateX(5);
         }
-        System.out.println(this.player.getX());
     }
 
     public void playerToLeft(int End, int Bottom){
@@ -45,7 +44,6 @@ public class Player extends Component  {
             }
             this.player.translateX(-5);
         }
-        System.out.println(this.player.getX());
     }
 
     public void playerJump(int Bottom){
