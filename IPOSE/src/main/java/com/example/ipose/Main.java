@@ -55,9 +55,16 @@ public class Main extends GameApplication {
     private void gameEnd(boolean reachedEndOfGame) {
         StringBuilder builder = new StringBuilder();
         if (reachedEndOfGame) {
-            builder.append("You have reached the end of the game!\n\n");
             FileManager FM = new FileManager();
             FM.setMaxLevel(this.userName, this.level + 1);
+
+            int score = FXGL.geti("score");
+            FM.setNewScore(this.userName, this.level, String.valueOf(score));
+            int highestScore = FM.getHighScore(this.level);
+            builder.append("You have reached the end of the game!\n\nHighest score was: ")
+                    .append(highestScore)
+                    .append("\n\n");
+
         }else{
             builder.append("Game Over!\n\n");
         }
