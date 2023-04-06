@@ -399,7 +399,6 @@ public class Main extends GameApplication {
         Ground ground3 = new Ground(-35, 560, 212, false);
         ground3.setNewGround(160, 490, 600, 20);
         this.grounds.add(ground3);
-        
 
         Ground ground4 = new Ground(-95, 510, 82, false);
         ground4.setNewGround(100, 360, 600, 20);
