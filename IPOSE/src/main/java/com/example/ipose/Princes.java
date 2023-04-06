@@ -6,12 +6,19 @@ import com.almasb.fxgl.entity.components.CollidableComponent;
 
 public class Princes {
     private Entity princes;
-    private String princesVoorkantImage = "PrincesVoorkantFlip.png";
+    private String princesVoorkantImage = "PrincesVoorkant.png";
+    private String princesFLIPImage = "PrincesVoorkantFlip.png";
 
-    public void setNewPrinces(int x, int y){
+    public void setNewPrinces(int x, int y, String type){
+        String image = "";
+        if(type == "Flip"){
+            image = this.princesFLIPImage;
+        }else{
+            image = this.princesVoorkantImage;
+        }
         this.princes = FXGL.entityBuilder()
                 .at(x, y)
-                .viewWithBBox(this.princesVoorkantImage)
+                .viewWithBBox(image)
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PRINCES)
                 .scale(0.12, 0.12)

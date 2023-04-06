@@ -2,6 +2,7 @@ package com.example.ipose;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLScene;
 import com.almasb.fxgl.audio.Audio;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.audio.Sound;
@@ -10,8 +11,14 @@ import com.almasb.fxgl.dsl.FXGLForKtKt;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.time.TimerAction;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import static com.almasb.fxgl.dsl.FXGL.run;
@@ -68,15 +75,15 @@ public class Main extends GameApplication {
 
         FXGL.getDialogService().showMessageBox(builder.toString(), this::LevelScreen);
     }
-    
+
 
     @Override
     protected void initGame(){
 
     }
 
-    private void createBarrol2(){
-        this.timerAction = getGameTimer().runAtInterval(this::createBarrol, Duration.seconds(1));
+    private void createBarrol2(double time){
+        this.timerAction = getGameTimer().runAtInterval(this::createBarrol, Duration.seconds(time));
     }
 
     private void createBarrol(){
@@ -246,6 +253,8 @@ public class Main extends GameApplication {
     }
 
     protected void initGameUI(){
+        FXGL.getGameScene().setBackgroundRepeat("background.jpg");
+
         Music gameMusic = FXGL.getAssetLoader().loadMusic("Super Mario Bros. Theme Song [TubeRipper.com].mp3");
         FXGL.getAudioPlayer().loopMusic(gameMusic);
 
@@ -275,8 +284,6 @@ public class Main extends GameApplication {
         scoreNumber.setStyle("-fx-text-fill: gray");
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreNumber);
-
-        FXGL.getGameScene().setBackgroundColor(Color.rgb(26,26,26));
     }
 
     private void setLadderForGameLadders(Ladder ladder, int ladderX, int ladderY) {
@@ -285,6 +292,51 @@ public class Main extends GameApplication {
     }
 
     protected void initialiseGame1() {
+        initGameUI();
+        Ground ground1 = new Ground(-145, 560, 472, true);
+        ground1.setNewGround(50, 750, 700, 20);
+        this.grounds.add(ground1);
+
+        Ground ground2 = new Ground(5, 510, 342, false);
+        ground2.setNewGround(200, 620, 500, 20);
+        this.grounds.add(ground2);
+
+        Ground ground3 = new Ground(-35, 560, 212, false);
+        ground3.setNewGround(160, 490, 600, 20);
+        this.grounds.add(ground3);
+
+        Ground ground4 = new Ground(-95, 510, 82, false);
+        ground4.setNewGround(100, 360, 600, 20);
+        this.grounds.add(ground4);
+
+        Ground ground5 = new Ground(-145, 560, -48, false);
+        ground5.setNewGround(50, 230, 700, 20);
+        this.grounds.add(ground5);
+
+        Ground ground6 = new Ground(195, 450, -178, false);
+        ground6.setNewGround(400, 100, 250, 20);
+        this.grounds.add(ground6);
+
+        this.setLadderForGameLadders(new Ladder(), 300, 648);
+        this.setLadderForGameLadders(new Ladder(), 650, 518);
+        this.setLadderForGameLadders(new Ladder(), 250, 388);
+        this.setLadderForGameLadders(new Ladder(), 450, 258);
+        this.setLadderForGameLadders(new Ladder(), 600, 128);
+
+        PowerUp powerUp1 = new PowerUp();
+        powerUp1.setNewPowerUp(320, 240);
+        this.powerUps.add(powerUp1);
+
+        this.princes1.setNewPrinces(220, -250, "");
+        this.donkeyKong1.setNewDonkeyKong(-150, -248);
+
+        this.player1.setNewPlayer(-100, 472);
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2(2);
+        }, Duration.seconds(0.12));
+    }
+
+    protected void initialiseGame2() {
         initGameUI();
         Ground ground1 = new Ground(-145, 560, 472, true);
         ground1.setNewGround(50, 750, 700, 20);
@@ -317,7 +369,6 @@ public class Main extends GameApplication {
         this.setLadderForGameLadders(new Ladder(), 200, 258);
         this.setLadderForGameLadders(new Ladder(), 650, 258);
 
-
         PowerUp powerUp1 = new PowerUp();
         powerUp1.setNewPowerUp(-10, 120);
         this.powerUps.add(powerUp1);
@@ -326,22 +377,62 @@ public class Main extends GameApplication {
         powerUp2.setNewPowerUp(550, 510);
         this.powerUps.add(powerUp2);
 
-        this.princes1.setNewPrinces(350, -250);
+        this.princes1.setNewPrinces(350, -250, "Flip");
         this.donkeyKong1.setNewDonkeyKong(-150, -248);
 
         this.player1.setNewPlayer(-100, 472);
-        getGameTimer().runOnceAfter(this::createBarrol2, Duration.seconds(0.2));
-    }
-
-    protected void initialiseGame2() {
-        initGameUI();
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2(1);
+        }, Duration.seconds(0.01));
     }
 
     protected void initialiseGame3() {
         initGameUI();
+        Ground ground1 = new Ground(-145, 560, 472, true);
+        ground1.setNewGround(50, 750, 700, 20);
+        this.grounds.add(ground1);
+
+        Ground ground2 = new Ground(5, 510, 342, false);
+        ground2.setNewGround(200, 620, 500, 20);
+        this.grounds.add(ground2);
+
+        Ground ground3 = new Ground(-35, 560, 212, false);
+        ground3.setNewGround(160, 490, 600, 20);
+        this.grounds.add(ground3);
+
+        Ground ground4 = new Ground(-95, 510, 82, false);
+        ground4.setNewGround(100, 360, 600, 20);
+        this.grounds.add(ground4);
+
+        Ground ground5 = new Ground(-145, 560, -48, false);
+        ground5.setNewGround(50, 230, 700, 20);
+        this.grounds.add(ground5);
+
+        Ground ground6 = new Ground(195, 450, -178, false);
+        ground6.setNewGround(400, 100, 250, 20);
+        this.grounds.add(ground6);
+
+        this.setLadderForGameLadders(new Ladder(), 300, 648);
+        this.setLadderForGameLadders(new Ladder(), 650, 518);
+        this.setLadderForGameLadders(new Ladder(), 250, 388);
+        this.setLadderForGameLadders(new Ladder(), 450, 258);
+        this.setLadderForGameLadders(new Ladder(), 600, 128);
+
+        PowerUp powerUp1 = new PowerUp();
+        powerUp1.setNewPowerUp(320, 240);
+        this.powerUps.add(powerUp1);
+
+        this.princes1.setNewPrinces(220, -250, "");
+        this.donkeyKong1.setNewDonkeyKong(-150, -248);
+
+        this.player1.setNewPlayer(-100, 472);
+        getGameTimer().runOnceAfter(() -> {
+            createBarrol2(1.5);
+        }, Duration.seconds(0.12));
     }
 
     protected void initialiseExit() {
+        FXGL.getGameScene().setBackgroundRepeat("0x0.jpg");
         FXGL.getAudioPlayer().stopAllMusic();
         FXGL.getAudioPlayer().stopAllSounds();
         FXGL.set("score", 0);
@@ -376,25 +467,26 @@ public class Main extends GameApplication {
 
     @Override
     protected void initUI() {
+        FXGL.getGameScene().setBackgroundRepeat("0x0.jpg");
         Label username = new Label("LOGIN:");
-        username.setStyle("-fx-text-fill: gray");
+        username.setStyle("-fx-text-fill: white");
         username.setTranslateX(300);
         username.setTranslateY(250);
-        username.setFont(new Font(70));
-
+        username.setFont(Font.font("Monospace", 70));
         TextField TF = new TextField();
-        TF.setStyle("-fx-text-fill: gray");
         TF.setTranslateX(250);
         TF.setTranslateY(450);
-        TF.setPrefWidth(350);
+        TF.setPrefWidth(300);
         TF.setPrefHeight(20);
+        TF.setStyle("-fx-background-color: white;");
 
         Button button = new Button("LOGIN");
-        button.setStyle("-fx-text-fill: gray");
+        button.setTextFill(Color.WHITE);
         button.setTranslateX(300);
         button.setTranslateY(520);
         button.setPrefSize(200, 20);
-
+        button.setStyle("-fx-background-color: rgb(110, 74, 33);");
+        button.setFont(Font.font("Monospace"));
         button.setOnAction(actionEvent -> {
             this.userName = TF.getText();
             TF.setVisible(false);
@@ -402,7 +494,6 @@ public class Main extends GameApplication {
             username.setVisible(false);
             LevelScreen();
         });
-
         FXGL.getGameScene().addUINode(username);
         FXGL.getGameScene().addUINode(button);
         FXGL.getGameScene().addUINode(TF);
@@ -411,27 +502,30 @@ public class Main extends GameApplication {
 
     protected void LevelScreen(){
         this.initialiseExit();
-
         FileManager FM = new FileManager();
         int maxLevel = FM.getMaxLevel(this.userName);
-
         Button b1 = new Button("LEVEL 1");
-        b1.setStyle("-fx-text-fill: gray");
+        b1.setTextFill(Color.WHITE);
         b1.setTranslateX(160);
         b1.setTranslateY(230);
         b1.setPrefSize(450, 100);
-
+        b1.setFont(Font.font("Monospace", 36));
+        b1.setStyle("-fx-background-color: rgb(110, 74, 33);");
         Button b2 = new Button("LEVEL 2");
-        b2.setStyle("-fx-text-fill: gray");
+        b2.setTextFill(Color.WHITE);
         b2.setTranslateX(160);
         b2.setTranslateY(350);
         b2.setPrefSize(450, 100);
-
+        b2.setFont(Font.font("Monospace", 36));
+        b2.setStyle("-fx-background-color: rgb(110, 74, 33);");
         Button b3 = new Button("LEVEL 3");
-        b3.setStyle("-fx-text-fill: gray");
+        b3.setTextFill(Color.WHITE);
         b3.setTranslateX(160);
         b3.setTranslateY(480);
         b3.setPrefSize(450, 100);
+        b3.setFont(Font.font("Monospace", 36));
+        b3.setFont(new Font(36));
+        b3.setStyle("-fx-background-color: rgb(110, 74, 33);");
 
         FXGL.getGameScene().addUINode(b1);
         FXGL.getGameScene().addUINode(b3);
