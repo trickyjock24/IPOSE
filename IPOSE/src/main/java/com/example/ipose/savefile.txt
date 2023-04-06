@@ -6,9 +6,9 @@ Tim - 2
 >>>>>>> c191165d89ccd091f0f5d8405f9b30fdd13513fa
 hi - 2
 tim - 1
-l - 1
+l - 2
 kk - 3
-ll - 2
+ll - 4
 kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
@@ -30,3 +30,4 @@ Ernie - 2
 Gat - 2
 Fat - 2
 Eren - 3
+;; - 4

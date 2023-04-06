@@ -30,7 +30,6 @@ public class Barrel {
 
     public void barrelRoll(double playerX, boolean end){
         if(end){
-            System.out.println(this.barrel.getX());
             if(this.barrel.getX() > 520){
                 this.barrel.translateY(5);
             }else{

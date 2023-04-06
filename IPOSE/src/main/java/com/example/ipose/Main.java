@@ -45,7 +45,6 @@ public class Main extends GameApplication {
     private TimerAction timerAction2;
     private String userName;
     private int level;
-
     private boolean playerEnd = false;
     private boolean playerSecontToEnd = false;
 
@@ -56,8 +55,6 @@ public class Main extends GameApplication {
         settings.setHeight(800);
         settings.setTitle("Donkey Kong");
         settings.setVersion("0.1");
-        settings.setDeveloperMenuEnabled(true);
-
     }
 
     private void gameEnd(boolean reachedEndOfGame) {
@@ -68,10 +65,18 @@ public class Main extends GameApplication {
             int score = FXGL.geti("score");
             FM.setNewScore(this.userName, this.level, String.valueOf(score));
             Score[] highestScore = FM.getHighScores(this.level);
-            builder.append("You have reached the end of the game!\n\nHighest score was: ")
-                    .append(highestScore[0].getScore())
-                    .append("\n\n");
-            if (score == highestScore[0].getScore()) {
+            if(this.level == 3){
+                builder.append("You have reached the end of the game!\n\nHighest score was: ")
+                        .append(highestScore[0].getScore())
+                        .append("pt")
+                        .append("\n\n");
+            }else{
+                builder.append("You have reached the level!\n\nHighest score was: ")
+                        .append(highestScore[0].getScore())
+                        .append("pt")
+                        .append("\n\n");
+            }
+            if (score > highestScore[0].getScore()) {
                 builder.append("YOU BROKE THE HIGH SCORE!\n\n");
             }
             int index = 1;
@@ -91,9 +96,7 @@ public class Main extends GameApplication {
                 }
 
             }
-        }
-
-        else{
+        }else{
             builder.append("Game Over!\n\n");
         }
         builder.append("Final score: ").append(FXGL.geti("score"));
@@ -169,7 +172,6 @@ public class Main extends GameApplication {
                 if(this.grounds.size() > activeNumber + 1){
                     activeNextGround.setActive(true);
                     player1.changeView(player1.getVincent1VoorkantImage(), "Voorkant");
-                    System.out.println(activeNumber);
                     if(activeNumber == 3){
                         this.playerSecontToEnd = true;
                     }
@@ -291,8 +293,6 @@ public class Main extends GameApplication {
         userLabel.setTranslateY(15);
         userLabel.setStyle("-fx-text-fill: white");
         FXGL.getGameScene().addUINode(userLabel);
-
-        System.out.println(this.level);
 
         Label levelLabel = new Label("Level: " + this.level);
         levelLabel.setTranslateX(50);
@@ -419,44 +419,39 @@ public class Main extends GameApplication {
         Ground ground1 = new Ground(-145, 560, 472, true);
         ground1.setNewGround(50, 750, 700, 20);
         this.grounds.add(ground1);
-
-        Ground ground2 = new Ground(5, 510, 342, false);
-        ground2.setNewGround(200, 620, 500, 20);
+        Ground ground2 = new Ground(-95, 510, 342, false);
+        ground2.setNewGround(100, 620, 600, 20);
         this.grounds.add(ground2);
-
-        Ground ground3 = new Ground(-35, 560, 212, false);
-        ground3.setNewGround(160, 490, 600, 20);
+        Ground ground3 = new Ground(-45, 560, 212, false);
+        ground3.setNewGround(150, 490, 600, 20);
         this.grounds.add(ground3);
-
-        Ground ground4 = new Ground(-95, 510, 82, false);
-        ground4.setNewGround(100, 360, 600, 20);
+        Ground ground4 = new Ground(5, 520, 82, false);
+        ground4.setNewGround(200, 360, 500, 20);
         this.grounds.add(ground4);
-
         Ground ground5 = new Ground(-145, 560, -48, false);
         ground5.setNewGround(50, 230, 700, 20);
         this.grounds.add(ground5);
-
         Ground ground6 = new Ground(195, 450, -178, false);
         ground6.setNewGround(400, 100, 250, 20);
         this.grounds.add(ground6);
-
-        this.setLadderForGameLadders(new Ladder(), 300, 648);
-        this.setLadderForGameLadders(new Ladder(), 650, 518);
-        this.setLadderForGameLadders(new Ladder(), 250, 388);
-        this.setLadderForGameLadders(new Ladder(), 450, 258);
+        this.setLadderForGameLadders(new Ladder(), 650, 648);
+        this.setLadderForGameLadders(new Ladder(), 250, 518);
+        this.setLadderForGameLadders(new Ladder(), 400, 388);
+        this.setLadderForGameLadders(new Ladder(), 650, 388);
+        this.setLadderForGameLadders(new Ladder(), 500, 258);
         this.setLadderForGameLadders(new Ladder(), 600, 128);
-
         PowerUp powerUp1 = new PowerUp();
-        powerUp1.setNewPowerUp(320, 240);
+        powerUp1.setNewPowerUp(450, 240);
         this.powerUps.add(powerUp1);
-
+        PowerUp powerUp2 = new PowerUp();
+        powerUp2.setNewPowerUp(130, 115);
+        this.powerUps.add(powerUp2);
         this.princes1.setNewPrinces(220, -250, "");
         this.donkeyKong1.setNewDonkeyKong(-150, -248);
-
         this.player1.setNewPlayer(-100, 472);
-        getGameTimer().runOnceAfter(() -> {
-            createBarrol2(1.5);
-        }, Duration.seconds(0.12));
+//        getGameTimer().runOnceAfter(() -> {
+//            createBarrol2(0.65);
+//        }, Duration.seconds(0.0005));
     }
 
     protected void initialiseExit() {
@@ -481,6 +476,7 @@ public class Main extends GameApplication {
         this.ladders = new ArrayList<>();
         this.powerUps = new ArrayList<>();
         this.playerEnd = false;
+        this.playerSecontToEnd = false;
 
         if(this.timerAction != null){
             this.timerAction.expire();
