@@ -1,5 +1,5 @@
 Tim - 2
- - 2
+ - 4
 hi - 2
 tim - 1
 l - 1
@@ -8,7 +8,7 @@ ll - 2
 kkkkkkkkkkkkkkkkkkkkkkkk - 1
 kkk - 1
 lk - 1
- - 2
+ - 4
 hoi - 2
 ki - 2
 k - 1
@@ -17,3 +17,4 @@ HOI - 2
 lll - 1
 llll - 1
 hh - 1
+mike - 1
