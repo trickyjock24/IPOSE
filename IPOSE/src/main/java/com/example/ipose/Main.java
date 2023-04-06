@@ -261,7 +261,7 @@ public class Main extends GameApplication {
         Label userLabel = new Label("User: " + this.userName);
         userLabel.setTranslateX(50);
         userLabel.setTranslateY(15);
-        userLabel.setStyle("-fx-text-fill: gray");
+        userLabel.setStyle("-fx-text-fill: white");
         FXGL.getGameScene().addUINode(userLabel);
 
         System.out.println(this.level);
@@ -269,19 +269,19 @@ public class Main extends GameApplication {
         Label levelLabel = new Label("Level: " + this.level);
         levelLabel.setTranslateX(50);
         levelLabel.setTranslateY(30);
-        levelLabel.setStyle("-fx-text-fill: gray");
+        levelLabel.setStyle("-fx-text-fill: white");
         FXGL.getGameScene().addUINode(levelLabel);
 
         Label scoreLabel = new Label("Score: ");
         scoreLabel.setTranslateX(50);
         scoreLabel.setTranslateY(45);
-        scoreLabel.setStyle("-fx-text-fill: gray");
+        scoreLabel.setStyle("-fx-text-fill: white");
         FXGL.getGameScene().addUINode(scoreLabel);
 
         Label scoreNumber = new Label("0");
         scoreNumber.setTranslateX(85);
         scoreNumber.setTranslateY(45);
-        scoreNumber.setStyle("-fx-text-fill: gray");
+        scoreNumber.setStyle("-fx-text-fill: white");
         scoreNumber.textProperty().bind(FXGL.getWorldProperties().intProperty("score").asString());
         FXGL.getGameScene().addUINode(scoreNumber);
     }
@@ -524,7 +524,6 @@ public class Main extends GameApplication {
         b3.setTranslateY(480);
         b3.setPrefSize(450, 100);
         b3.setFont(Font.font("Monospace", 36));
-        b3.setFont(new Font(36));
         b3.setStyle("-fx-background-color: rgb(110, 74, 33);");
 
         FXGL.getGameScene().addUINode(b1);
